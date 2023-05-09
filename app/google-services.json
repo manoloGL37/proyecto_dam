@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772333261051",
+    "project_id": "stylepeak-manuel",
+    "storage_bucket": "stylepeak-manuel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772333261051:android:59d0e6047f60a689b5a05e",
+        "android_client_info": {
+          "package_name": "com.example.proyectodammanuelgongora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772333261051-l2lifjavlvr5f9j7gal44n4mbc6nqrgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4Xv-mqxe7Qwwl5TWvW44uFaFUzdX-51Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772333261051-l2lifjavlvr5f9j7gal44n4mbc6nqrgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

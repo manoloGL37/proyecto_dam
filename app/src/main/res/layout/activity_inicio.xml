@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login.InicioActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_inicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/logo" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="409dp"
+        android:layout_height="77dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_home_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/home_menu_inferior"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_social_menu"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_social_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/social_menu_inferior"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_usuario_menu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/usuario_menu_inferior"
+            android:onClick="onClick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_social_menu" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/espacio_fragment"
+        android:layout_width="409dp"
+        android:layout_height="599dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_inicio"></FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
