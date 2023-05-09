@@ -1,5 +1,8 @@
 package com.example.proyectodammanuelgongora.Database;
 
+import android.os.StrictMode;
+import android.util.Log;
+
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 
 import java.sql.*;
@@ -14,78 +17,56 @@ public class DataBase {
     String url = "jdbc:mysql://192.168.0.194:3306/";
     String user = "root";
     String password = "";
-    String driver = "com.mysql.cj.jdbc.Driver";
     Connection conn;
+    String driver = "com.mysql.jdbc.Driver";
 
     public DataBase() {
     }
 
-    /*
     public Connection conectar() {
         try {
+            StrictMode.ThreadPolicy politica = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(politica);
+
             Class.forName(driver);
             conn = DriverManager.getConnection(url + bd, user, password);
-        } catch (ClassNotFoundException ex) {
+            Log.e("Conexion", "Conexion establecida");
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            Log.e("Conexion", "Error al conectar");
         }
         return conn;
     }
 
-    public void desconetar() {
+    public void desconectar() {
         try {
             conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            conn = null;
+        } catch (SQLException ex) {
+
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-     */
-
-
-    public Connection conectar() {
-        if (conn == null) {
-            try {
-                Class.forName(driver);
-                conn = DriverManager.getConnection(url+bd, user, password);
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return conn;
-    }
-
-    public void closeConnection() {
-        if (conn != null) {
-            try {
-                conn.close();
-                conn = null;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public ArrayList<Producto> verProductos() {
-        ArrayList<Producto> arrayProductos = new ArrayList<Producto>();
+        ArrayList<Producto> productos = new ArrayList<Producto>();
         if (conn != null) {
             try {
                 PreparedStatement queryProductos = conn.prepareStatement("SELECT * FROM producto");
                 ResultSet resultProductos = queryProductos.executeQuery();
                 while (resultProductos.next()) {
                     int id_producto = resultProductos.getInt("id_producto");
-                    String nombre_prod = resultProductos.getString("nombre_prod");
+                    String nombre_prod = resultProductos.getString("id_producto");
                     String categoria = resultProductos.getString("categoria");
-                    Blob imagen = resultProductos.getBlob("imagen");
+                    Blob imagen = resultProductos.getBlob("categoria");
                     String descripcion = resultProductos.getString("descripcion");
-                    String talla = resultProductos.getString("talla");
-                    int stock = resultProductos.getInt("nombre_prod");
-                    String grupo_producto = resultProductos.getString("nombre_prod");
-                    double precio = resultProductos.getDouble("nombre_prod");
-
-                    arrayProductos.add(new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, talla, stock, grupo_producto, precio));
-
+                    String talla = resultProductos.getString("descripcion");
+                    int stock = resultProductos.getInt("stock");
+                    String grupo_producto = resultProductos.getString("grupo_producto");
+                    double precio = resultProductos.getDouble("precio");
+                    productos.add(new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, talla, stock, grupo_producto, precio));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,9 +74,8 @@ public class DataBase {
         } else {
             //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
         }
-        return arrayProductos;
+        return productos;
     }
-
 
 
 }

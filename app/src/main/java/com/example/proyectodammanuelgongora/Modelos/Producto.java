@@ -100,4 +100,19 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id_producto=" + id_producto +
+                ", nombre_prod='" + nombre_prod + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", imagen=" + imagen +
+                ", descripcion='" + descripcion + '\'' +
+                ", talla='" + talla + '\'' +
+                ", stock=" + stock +
+                ", grupo_producto='" + grupo_producto + '\'' +
+                ", precio=" + precio +
+                '}';
+    }
 }

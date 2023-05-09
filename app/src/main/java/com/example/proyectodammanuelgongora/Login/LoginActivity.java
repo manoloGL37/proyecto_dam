@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         productos = conexion.verProductos();
 
         for (int i = 0; i< productos.size(); i++) {
-            Log.e("Producto" + i, String.valueOf(productos.get(i)));
+            Log.e("Producto" + i, (productos.get(i).toString()));
         }
 
         username = findViewById(R.id.eti_login_user);
