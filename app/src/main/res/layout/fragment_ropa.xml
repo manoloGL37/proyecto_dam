@@ -5,8 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".Aplicacion.RopaFragment">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ropa"
+        android:textSize="36dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_ropa"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="182dp"
+        android:paddingTop="50px"
+        android:orientation="horizontal"/>
+
+
 </FrameLayout>

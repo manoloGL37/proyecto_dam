@@ -4,8 +4,8 @@ import java.sql.Blob;
 
 public class Producto {
 
-    private int id_producto;
-    private String nombre_prod;
+    private int idProducto;
+    private String nombreProd;
     private String categoria;
     private Blob imagen;
     private String descripcion;
@@ -18,8 +18,8 @@ public class Producto {
     }
 
     public Producto(int id_producto, String nombre_prod, String categoria, Blob imagen, String descripcion, String talla, int stock, String grupo_producto, double precio) {
-        this.id_producto = id_producto;
-        this.nombre_prod = nombre_prod;
+        this.idProducto = id_producto;
+        this.nombreProd = nombre_prod;
         this.categoria = categoria;
         this.imagen = imagen;
         this.descripcion = descripcion;
@@ -29,20 +29,20 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getId_producto() {
-        return id_producto;
+    public int getIdProducto() {
+        return idProducto;
     }
 
-    public void setId_producto(int id_producto) {
-        this.id_producto = id_producto;
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public String getNombre_prod() {
-        return nombre_prod;
+    public String getNombreProd() {
+        return nombreProd;
     }
 
-    public void setNombre_prod(String nombre_prod) {
-        this.nombre_prod = nombre_prod;
+    public void setNombreProd(String nombreProd) {
+        this.nombreProd = nombreProd;
     }
 
     public String getCategoria() {
@@ -104,8 +104,8 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto{" +
-                "id_producto=" + id_producto +
-                ", nombre_prod='" + nombre_prod + '\'' +
+                "id_producto=" + idProducto +
+                ", nombre_prod='" + nombreProd + '\'' +
                 ", categoria='" + categoria + '\'' +
                 ", imagen=" + imagen +
                 ", descripcion='" + descripcion + '\'' +
