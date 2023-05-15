@@ -35,9 +35,10 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
+        holder.imagenProducto.setImageResource(R.drawable.camiseta);
         holder.nombreProducto.setText(listaProductos.get(position).getNombreProd());
         holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()));
-        holder.imagenProducto.setImageResource(R.drawable.camiseta);
+
     }
 
     @Override

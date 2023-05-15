@@ -3,7 +3,6 @@ package com.example.proyectodammanuelgongora.Aplicacion;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +20,8 @@ import java.util.ArrayList;
 
 public class RopaFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    ArrayList<Producto> listaProductos;
+    RecyclerView recyclerViewCamisetas, recyclerViewSudaderas;
+    ArrayList<Producto> listaCamisetas, listaSudaderas;
     int posicion;
     Producto p;
     DataBase conexion;
@@ -41,16 +40,23 @@ public class RopaFragment extends Fragment {
         conexion = new DataBase();
         conexion.conectar();
 
-        recyclerView = view.findViewById(R.id.recyclerview_ropa);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewCamisetas = view.findViewById(R.id.recyclerview_camisetas);
+        recyclerViewCamisetas.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        listaProductos = new ArrayList<>();
-        listaProductos = conexion.verProductos();
+        recyclerViewSudaderas = view.findViewById(R.id.recyclerview_sudaderas);
+        recyclerViewSudaderas.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-        Log.e("Productos", listaProductos.toString());
+        listaCamisetas = new ArrayList<>();
+        listaCamisetas = conexion.verProductos();
 
-        AdaptadorRopa adapter = new AdaptadorRopa(listaProductos);
-        recyclerView.setAdapter(adapter);
+        listaSudaderas = new ArrayList<>();
+        listaSudaderas = conexion.verProductos();
+
+        AdaptadorRopa adapterCamis = new AdaptadorRopa(listaCamisetas);
+        recyclerViewCamisetas.setAdapter(adapterCamis);
+
+        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(listaCamisetas);
+        recyclerViewSudaderas.setAdapter(adapterSudaderas);
 
 
         return view;

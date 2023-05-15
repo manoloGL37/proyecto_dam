@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DataBase {
 
     String bd = "stylepeak";
-    String url = "jdbc:mysql://192.168.0.194:3306/";
+    String url = "jdbc:mysql://192.168.0.192:3306/";
     String user = "root";
     String password = "";
     Connection conn;
@@ -58,7 +58,7 @@ public class DataBase {
                 ResultSet resultProductos = queryProductos.executeQuery();
                 while (resultProductos.next()) {
                     int id_producto = resultProductos.getInt("id_producto");
-                    String nombre_prod = resultProductos.getString("id_producto");
+                    String nombre_prod = resultProductos.getString("nombre_prod");
                     String categoria = resultProductos.getString("categoria");
                     Blob imagen = resultProductos.getBlob("categoria");
                     String descripcion = resultProductos.getString("descripcion");
