@@ -77,6 +77,33 @@ public class DataBase {
         return productos;
     }
 
+    public Producto verProducto(int id) {
+        Producto producto = new Producto();
+        if (conn != null) {
+            try {
+                PreparedStatement queryProducto = conn.prepareStatement("SELECT * FROM producto WHERE id_producto = ?");
+                queryProducto.setInt(1, id);
+                ResultSet resultProducto = queryProducto.executeQuery();
+                if (resultProducto.next()) {
+                    int id_producto = resultProducto.getInt("id_producto");
+                    String nombre_prod = resultProducto.getString("nombre_prod");
+                    String categoria = resultProducto.getString("categoria");
+                    Blob imagen = resultProducto.getBlob("categoria");
+                    String descripcion = resultProducto.getString("descripcion");
+                    String talla = resultProducto.getString("descripcion");
+                    int stock = resultProducto.getInt("stock");
+                    String grupo_producto = resultProducto.getString("grupo_producto");
+                    double precio = resultProducto.getDouble("precio");
+                    producto = new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, talla, stock, grupo_producto, precio);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return producto;
+    }
 
 
 

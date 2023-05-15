@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.InicioActivity">
+    tools:context=".Aplicacion.InicioActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_inicio"
@@ -20,7 +20,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/logo" />
+            app:navigationIcon="@drawable/logo_blanco" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout

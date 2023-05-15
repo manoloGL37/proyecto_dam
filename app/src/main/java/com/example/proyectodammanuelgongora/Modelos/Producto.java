@@ -1,8 +1,9 @@
 package com.example.proyectodammanuelgongora.Modelos;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
-public class Producto {
+public class Producto implements Serializable {
 
     private int idProducto;
     private String nombreProd;

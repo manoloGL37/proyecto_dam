@@ -1,5 +1,6 @@
 package com.example.proyectodammanuelgongora.Aplicacion;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Compra.AdaptadorRopa;
+import com.example.proyectodammanuelgongora.Compra.ProductActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
@@ -57,6 +60,17 @@ public class RopaFragment extends Fragment {
 
         AdaptadorRopa adapterSudaderas = new AdaptadorRopa(listaCamisetas);
         recyclerViewSudaderas.setAdapter(adapterSudaderas);
+
+        adapterCamis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                posicion = recyclerViewCamisetas.getChildAdapterPosition(v);
+                int id = listaCamisetas.get(posicion).getIdProducto();
+                Intent intent = new Intent(getActivity().getApplicationContext(), ProductActivity.class);
+                intent.putExtra("idProducto", id);
+                startActivity(intent);
+            }
+        });
 
 
         return view;

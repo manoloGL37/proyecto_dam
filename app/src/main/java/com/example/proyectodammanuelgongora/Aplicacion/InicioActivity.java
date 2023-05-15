@@ -1,4 +1,4 @@
-package com.example.proyectodammanuelgongora.Login;
+package com.example.proyectodammanuelgongora.Aplicacion;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -72,10 +72,6 @@ public class InicioActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.lupa_toolbar:
-                Snackbar.make(findViewById(android.R.id.content), "Este es el item 1", Snackbar.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "Esta es la opción 1", Toast.LENGTH_SHORT).show();
-                return true;
             case R.id.carrito_toolbar:
                 Snackbar.make(findViewById(android.R.id.content), "Este es el item 2", Snackbar.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), "Esta es la opción 2", Toast.LENGTH_SHORT).show();
