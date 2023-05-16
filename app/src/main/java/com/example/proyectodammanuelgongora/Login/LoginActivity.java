@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
+import com.example.proyectodammanuelgongora.Modelos.Usuario;
 import com.example.proyectodammanuelgongora.R;
 
 import java.util.ArrayList;
@@ -48,10 +49,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), InicioActivity.class);
 
-                if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
+                Usuario user = conexion.login(username.getText().toString(), password.getText().toString());
+
+                if (user.getIdUser() != 0) {
+                    i.putExtra("idUsuarioLog", user.getIdUser());
                     startActivity(i);
                 } else
                     Toast.makeText(LoginActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
             }
         });
 

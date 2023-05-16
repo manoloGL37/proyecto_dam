@@ -39,8 +39,8 @@
 
     <ImageView
         android:id="@+id/publicacion_user_social"
-        android:layout_width="409dp"
-        android:layout_height="317dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
