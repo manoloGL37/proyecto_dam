@@ -39,9 +39,11 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
-        //holder.nombreUsuario.setText(listaPublicaciones.get(position).getIdPropietario());
-        ImageView imageView = utiles.obtenerImageViewDesdeBytes(context, listaPublicaciones.get(position).getImagen());
+        holder.nombreUsuario.setText(listaPublicaciones.get(position).getNombre_usuario());
+        ImageView imageView = utiles.obtenerImageViewDesdeBytes(context, listaPublicaciones.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
         holder.imagenPublicacion.setImageDrawable(imageView.getDrawable());
+        holder.descripcion.setText(listaPublicaciones.get(position).getDescripcion());
+        holder.likes.setText(String.valueOf(listaPublicaciones.get(position).getLikes()));
     }
 
     @Override
@@ -64,8 +66,7 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
     public class MiViewHolder extends RecyclerView.ViewHolder { //Subclase
 
         ImageView imagenPublicacion;
-        TextView descripcion;
-        TextView nombreUsuario;
+        TextView descripcion, nombreUsuario, likes;
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +74,7 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
             nombreUsuario = itemView.findViewById(R.id.username_social);
             imagenPublicacion = itemView.findViewById(R.id.publicacion_user_social);
             descripcion = itemView.findViewById(R.id.descrpcion_social);
+            likes = itemView.findViewById(R.id.num_likes_social);
 
         }
 

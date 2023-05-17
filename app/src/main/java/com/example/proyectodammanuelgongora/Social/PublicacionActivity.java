@@ -79,7 +79,7 @@ public class PublicacionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 byte[] imagen = utils.convertirImageButtonABlob(imagenPublicacion);
-                bd.crearPublicacion(new Publicacion(0, imagen, descripcionPublicacion.getText().toString(), null, 0, 1));
+                bd.crearPublicacion(new Publicacion(0, imagen, descripcionPublicacion.getText().toString(), null, 0, 1, "admin"));
             }
         });
 

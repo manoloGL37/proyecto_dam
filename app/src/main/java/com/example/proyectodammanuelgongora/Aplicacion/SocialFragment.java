@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +46,7 @@ public class SocialFragment extends Fragment {
         conexion.conectar();
 
         recyclerViewPublicaciones = view.findViewById(R.id.recyclerview_social);
-        recyclerViewPublicaciones.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewPublicaciones.setLayoutManager(new GridLayoutManager(getActivity(),1));
 
         listaPublicaciones = new ArrayList<>();
         listaPublicaciones = conexion.verPublicaciones();

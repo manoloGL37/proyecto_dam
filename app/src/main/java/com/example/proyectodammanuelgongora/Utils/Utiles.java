@@ -31,7 +31,7 @@ public class Utiles {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
 
-        // Obtener el arreglo de bytes del bitmap comprimido
+        // Obtener el array de bytes del bitmap comprimido
         byte[] blob = outputStream.toByteArray();
 
         return blob;

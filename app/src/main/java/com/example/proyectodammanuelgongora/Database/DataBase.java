@@ -86,7 +86,6 @@ public class DataBase {
         Usuario usuarioLog = new Usuario();
         try {
             String contrasenyaEncriptada = encriptarContrasenya(contrasenya);
-            Log.e("Encriptar contraseña", contrasenyaEncriptada);
             String sql = "SELECT * FROM usuario WHERE email = ? AND contrasenya = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
@@ -96,7 +95,6 @@ public class DataBase {
             if (resultSet.next()) {
                 usuarioLog = new Usuario();
                 usuarioLog.setIdUser(resultSet.getInt("id"));
-                Log.e("Ha hecho la consulta", String.valueOf(usuarioLog.getIdUser()));
             }
 
         } catch (NoSuchAlgorithmException e) {
@@ -189,7 +187,7 @@ public class DataBase {
         ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
         if (conn != null) {
             try {
-                PreparedStatement queryPublicaciones = conn.prepareStatement("SELECT * FROM publicacion ORDER BY fecha_subida DESC");
+                PreparedStatement queryPublicaciones = conn.prepareStatement("SELECT p.*, us.nombre_usuario FROM publicacion p INNER JOIN usuario us ON us.id = p.id_propietario ORDER BY fecha_subida DESC");
                 ResultSet resultPublicaciones = queryPublicaciones.executeQuery();
                 while (resultPublicaciones.next()) {
                     int idPublicacion = resultPublicaciones.getInt("id_publicacion");
@@ -198,7 +196,8 @@ public class DataBase {
                     Date fechaSubida = resultPublicaciones.getDate("fecha_subida");
                     int likes = resultPublicaciones.getInt("likes");
                     int idPropietario = resultPublicaciones.getInt("id_propietario");
-                    publicaciones.add(new Publicacion(idPublicacion, imagen, descripcion, fechaSubida, likes, idPropietario));
+                    String nombre_propietario = resultPublicaciones.getString("nombre_usuario");
+                    publicaciones.add(new Publicacion(idPublicacion, imagen, descripcion, fechaSubida, likes, idPropietario, nombre_propietario));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
