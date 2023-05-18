@@ -68,14 +68,15 @@ public class DataBase {
 
             String contrasenyaEncriptada = encriptarContrasenya(usuario.getContrsenya());
 
-            String query = "INSERT INTO Usuario (nombre, nombre_usuario, contrasenya, email) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO usuario (nombre, nombre_usuario, contrasenya, email, rol) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement insertUser = conn.prepareStatement(query);
             insertUser.setString(1, usuario.getNombre());
             insertUser.setString(2, usuario.getNombreUsuario());
             insertUser.setString(3, contrasenyaEncriptada);
             insertUser.setString(4, usuario.getEmail());
-            insertUser.executeQuery();
+            insertUser.setInt(5, 3);
+            insertUser.executeUpdate();
 
             ok = true;
         } catch (SQLException e) {
@@ -182,15 +183,14 @@ public class DataBase {
             String fechaSubida = LocalDateTime.now().format(formatter);
 
             String query = "INSERT INTO publicacion(imagen, descripcion, fecha_subida, likes, id_propietario) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setBytes(1, publicacion.getImagen());
-            statement.setString(2, publicacion.getDescripcion());
-            statement.setString(3, fechaSubida);
-            statement.setInt(4, 0);
-            statement.setInt(5, publicacion.getIdPropietario());
+            PreparedStatement queryPublicacion = conn.prepareStatement(query);
+            queryPublicacion.setBytes(1, publicacion.getImagen());
+            queryPublicacion.setString(2, publicacion.getDescripcion());
+            queryPublicacion.setString(3, fechaSubida);
+            queryPublicacion.setInt(4, 0);
+            queryPublicacion.setInt(5, publicacion.getIdPropietario());
 
-            statement.executeUpdate();
-            Log.e("Subida", "Se ha subido bien");
+            queryPublicacion.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -224,6 +224,44 @@ public class DataBase {
         return publicaciones;
     }
 
+    public boolean comprobarUsuario (String usuario) {
+        boolean existe = false;
+        if (conn != null) {
+            try {
+                String query = "SELECT nombre_usuario FROM usuario WHERE nombre_usuario = ?";
+
+                PreparedStatement queryComprobarUsuario = conn.prepareStatement(query);
+                queryComprobarUsuario.setString(1, usuario);
+                ResultSet resultComprobarUsuario = queryComprobarUsuario.executeQuery();
+                if (resultComprobarUsuario.next()) {
+                    existe = true;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return existe;
+    }
+
+    public boolean comprobarEmail (String email) {
+        boolean existe = false;
+        if (conn != null) {
+            try {
+                String query = "SELECT email FROM usuario WHERE email = ?";
+
+                PreparedStatement queryComprobarEmail = conn.prepareStatement(query);
+                queryComprobarEmail.setString(1, email);
+                ResultSet resultComprobarEmail = queryComprobarEmail.executeQuery();
+                if (resultComprobarEmail.next()) {
+                    existe = true;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return existe;
+    }
+
     // Encriptar contraseña en SHA-256
     private String encriptarContrasenya(String contrasenya) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -235,6 +273,7 @@ public class DataBase {
         }
         return sb.toString();
     }
+
 
 
 

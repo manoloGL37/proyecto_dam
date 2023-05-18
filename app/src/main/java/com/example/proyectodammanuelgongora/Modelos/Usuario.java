@@ -7,7 +7,7 @@ public class Usuario {
     private String nombreUsuario;
     private String contrsenya;
     private String email;
-    private String rol;
+    private int rol;
     private String telefono;
     private String direccion;
 
@@ -21,7 +21,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public Usuario(int idUser, String nombre, String nombreUsuario, String contrsenya, String email, String rol, String telefono, String direccion) {
+    public Usuario(int idUser, String nombre, String nombreUsuario, String contrsenya, String email, int rol, String telefono, String direccion) {
         this.idUser = idUser;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
@@ -72,11 +72,11 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getRol() {
+    public int getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(int rol) {
         this.rol = rol;
     }
 
