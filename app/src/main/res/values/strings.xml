@@ -5,5 +5,47 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_register">¡Bienvenido!</string>
+
+
+    <!-- activity_inicio -->
+    <string name="titulo">Style Peak</string>
+
+    <!-- activity_login -->
+    <string name="eti_login_user">Usuario</string>
+    <string name="eti_login_password">Contraseña</string>
+    <string name="btn_login">Iniciar Sesion</string>
+    <string name="btn_register">Registrarse</string>
+
+    <!-- activity_product -->
+    <string name="color_producto">Color</string>
+    <string name="talla_producto">Talla</string>
+    <string name="btn_carrito">Añadir al carrito</string>
+
+    <!-- activity_publicacion -->
+    <string name="nueva_publicacion">Nueva Publicación</string>
+    <string name="descripcion">Descripción</string>
+    <string name="btn_publicar">Publicar</string>
+
+    <!-- activity_registro -->
+    <string name="titulo_registro">¡Bienvenido!</string>
+    <string name="eti_nombre_registro">Nombre completo</string>
+    <string name="eti_email_registro">Email</string>
+    <string name="eti_usuario_registro">Usuario</string>
+    <string name="eti_contrasenya_registro">Contraseña</string>
+    <string name="eti_confirmar_contrasenya_registro">Confirmar contraseña</string>
+    <string name="btn_registro">Registrarse</string>
+    <string name="btn_volver">Volver</string>
+
+    <!-- fragment_datos_usuario -->
+    <string name="btn_user_datos">Datos</string>
+    <string name="btn_user_pedidos">Pedidos</string>
+    <string name="btn_user_publicaciones">Publicaciones</string>
+    <string name="btn_user_cerrar_sesion">Cerrar Sesion</string>
+
+    <!-- fragment_ropa -->
+    <string name="camisteas">Camisetas</string>
+    <string name="sudaderas">Sudaderas</string>
+
+    <!-- fragment_social -->
+    <string name="btn_agregar_publi">Nueva publicacion</string>
 </resources>
