@@ -35,6 +35,7 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
+        // Rellenar componentes
         holder.imagenProducto.setImageResource(R.drawable.camiseta);
         holder.nombreProducto.setText(listaProductos.get(position).getNombreProd());
         holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()));
@@ -68,6 +69,7 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            // Relaciones componentes
             imagenProducto = itemView.findViewById(R.id.imagenProducto);
             nombreProducto = itemView.findViewById(R.id.nombreProducto);
             precioProducto = itemView.findViewById(R.id.precioProducto);

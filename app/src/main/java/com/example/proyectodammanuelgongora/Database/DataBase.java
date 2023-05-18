@@ -33,6 +33,7 @@ public class DataBase {
     public DataBase() {
     }
 
+    // Conectar base de datos
     public Connection conectar() {
         try {
             StrictMode.ThreadPolicy politica = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -48,6 +49,7 @@ public class DataBase {
         return conn;
     }
 
+    // Desconectar base de datos
     public void desconectar() {
         try {
             conn.close();
@@ -59,14 +61,16 @@ public class DataBase {
         }
     }
 
+    // Crear usuario nuevo en base de datos
     public boolean crearUsuario(Usuario usuario) {
         boolean ok = false;
         try {
 
             String contrasenyaEncriptada = encriptarContrasenya(usuario.getContrsenya());
 
-            String sql = "INSERT INTO Usuario (nombre, nombre_usuario, contrasenya, email) VALUES (?, ?, ?, ?)";
-            PreparedStatement insertUser = conn.prepareStatement(sql);
+            String query = "INSERT INTO Usuario (nombre, nombre_usuario, contrasenya, email) VALUES (?, ?, ?, ?)";
+
+            PreparedStatement insertUser = conn.prepareStatement(query);
             insertUser.setString(1, usuario.getNombre());
             insertUser.setString(2, usuario.getNombreUsuario());
             insertUser.setString(3, contrasenyaEncriptada);
@@ -82,12 +86,15 @@ public class DataBase {
         return ok;
     }
 
+    // Logear usuario
     public Usuario login(String email, String contrasenya) {
         Usuario usuarioLog = new Usuario();
         try {
             String contrasenyaEncriptada = encriptarContrasenya(contrasenya);
-            String sql = "SELECT * FROM usuario WHERE email = ? AND contrasenya = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
+
+            String query = "SELECT * FROM usuario WHERE email = ? AND contrasenya = ?";
+
+            PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, email);
             statement.setString(2, contrasenyaEncriptada);
             ResultSet resultSet = statement.executeQuery();
@@ -106,11 +113,14 @@ public class DataBase {
         return usuarioLog;
     }
 
+    // Ver todos los productos
     public ArrayList<Producto> verProductos() {
         ArrayList<Producto> productos = new ArrayList<Producto>();
         if (conn != null) {
             try {
-                PreparedStatement queryProductos = conn.prepareStatement("SELECT * FROM producto");
+                String query = "SELECT * FROM producto";
+
+                PreparedStatement queryProductos = conn.prepareStatement(query);
                 ResultSet resultProductos = queryProductos.executeQuery();
                 while (resultProductos.next()) {
                     int id_producto = resultProductos.getInt("id_producto");
@@ -133,11 +143,14 @@ public class DataBase {
         return productos;
     }
 
+    // Ver un producto
     public Producto verProducto(int id) {
         Producto producto = new Producto();
         if (conn != null) {
             try {
-                PreparedStatement queryProducto = conn.prepareStatement("SELECT * FROM producto WHERE id_producto = ?");
+                String query = "SELECT * FROM producto WHERE id_producto = ?";
+
+                PreparedStatement queryProducto = conn.prepareStatement(query);
                 queryProducto.setInt(1, id);
                 ResultSet resultProducto = queryProducto.executeQuery();
                 if (resultProducto.next()) {
@@ -161,15 +174,15 @@ public class DataBase {
         return producto;
     }
 
+    // Crear publucacion
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void crearPublicacion(Publicacion publicacion) {
         try {
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String fechaSubida = LocalDateTime.now().format(formatter);
 
-            String sql = "INSERT INTO publicacion(imagen, descripcion, fecha_subida, likes, id_propietario) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            String query = "INSERT INTO publicacion(imagen, descripcion, fecha_subida, likes, id_propietario) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = conn.prepareStatement(query);
             statement.setBytes(1, publicacion.getImagen());
             statement.setString(2, publicacion.getDescripcion());
             statement.setString(3, fechaSubida);
@@ -183,11 +196,14 @@ public class DataBase {
         }
     }
 
+    // Ver todas las publicaciones
     public ArrayList<Publicacion> verPublicaciones() {
         ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
         if (conn != null) {
             try {
-                PreparedStatement queryPublicaciones = conn.prepareStatement("SELECT p.*, us.nombre_usuario FROM publicacion p INNER JOIN usuario us ON us.id = p.id_propietario ORDER BY fecha_subida DESC");
+                String query = "SELECT p.*, us.nombre_usuario FROM publicacion p INNER JOIN usuario us ON us.id = p.id_propietario ORDER BY fecha_subida DESC";
+
+                PreparedStatement queryPublicaciones = conn.prepareStatement(query);
                 ResultSet resultPublicaciones = queryPublicaciones.executeQuery();
                 while (resultPublicaciones.next()) {
                     int idPublicacion = resultPublicaciones.getInt("id_publicacion");
@@ -208,6 +224,7 @@ public class DataBase {
         return publicaciones;
     }
 
+    // Encriptar contraseña en SHA-256
     private String encriptarContrasenya(String contrasenya) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(contrasenya.getBytes());

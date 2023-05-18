@@ -42,20 +42,24 @@ public class SocialFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_social, container, false);
 
+        // Inicializar base de datos y conectar
         conexion = new DataBase();
         conexion.conectar();
 
+        // Asignacion de recyclerView e inicializacion
         recyclerViewPublicaciones = view.findViewById(R.id.recyclerview_social);
         recyclerViewPublicaciones.setLayoutManager(new GridLayoutManager(getActivity(),1));
 
         listaPublicaciones = new ArrayList<>();
         listaPublicaciones = conexion.verPublicaciones();
 
+        // Enviar lista a adaptador
         AdaptadorSocial adapterPublicaciones = new AdaptadorSocial(getActivity(), listaPublicaciones);
         recyclerViewPublicaciones.setAdapter(adapterPublicaciones);
 
         btnNuvPubli = view.findViewById(R.id.btn_agregar_publi);
 
+        // Boton para nueva publicacion
         btnNuvPubli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

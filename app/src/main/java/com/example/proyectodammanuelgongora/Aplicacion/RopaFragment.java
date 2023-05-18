@@ -40,9 +40,11 @@ public class RopaFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ropa, container, false);
 
+        // Inicializar base de datos y conectar
         conexion = new DataBase();
         conexion.conectar();
 
+        // Asignacion de recyclerViews e inicializacion
         recyclerViewCamisetas = view.findViewById(R.id.recyclerview_camisetas);
         recyclerViewCamisetas.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -55,12 +57,14 @@ public class RopaFragment extends Fragment {
         listaSudaderas = new ArrayList<>();
         listaSudaderas = conexion.verProductos();
 
+        // Enviar listas a adaptadores
         AdaptadorRopa adapterCamis = new AdaptadorRopa(listaCamisetas);
         recyclerViewCamisetas.setAdapter(adapterCamis);
 
         AdaptadorRopa adapterSudaderas = new AdaptadorRopa(listaCamisetas);
         recyclerViewSudaderas.setAdapter(adapterSudaderas);
 
+        // Listener para cuando se pulse sobre un producto
         adapterCamis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

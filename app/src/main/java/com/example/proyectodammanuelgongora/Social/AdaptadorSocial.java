@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +39,7 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
         holder.nombreUsuario.setText(listaPublicaciones.get(position).getNombre_usuario());
-        ImageView imageView = utiles.obtenerImageViewDesdeBytes(context, listaPublicaciones.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
+        ImageView imageView = utiles.blobAImageView(context, listaPublicaciones.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
         holder.imagenPublicacion.setImageDrawable(imageView.getDrawable());
         holder.descripcion.setText(listaPublicaciones.get(position).getDescripcion());
         holder.likes.setText(String.valueOf(listaPublicaciones.get(position).getLikes()));

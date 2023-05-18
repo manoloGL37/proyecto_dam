@@ -30,14 +30,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Conexion base de datos
         conexion = new DataBase();
         conexion.conectar();
 
-        productos = conexion.verProductos();
-
-        for (int i = 0; i< productos.size(); i++) {
-            Log.e("Producto" + i, (productos.get(i).toString()));
-        }
 
         username = findViewById(R.id.eti_login_user);
         password = findViewById(R.id.eti_login_password);
@@ -49,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), InicioActivity.class);
 
+                // Logear usuario
                 Usuario user = conexion.login(username.getText().toString(), password.getText().toString());
 
                 if (user.getIdUser() != 0) {
@@ -62,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Ir a la actividad de crear nuevo usuario
                 Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
             }

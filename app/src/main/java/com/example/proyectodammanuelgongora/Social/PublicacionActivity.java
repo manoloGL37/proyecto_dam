@@ -6,13 +6,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +41,7 @@ public class PublicacionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publicacion);
 
+        // Conectar base de datos
         bd.conectar();
 
         imagenPublicacion = findViewById(R.id.img_publicacion);
@@ -52,6 +49,7 @@ public class PublicacionActivity extends AppCompatActivity {
         btnAtras = findViewById(R.id.btn_atras_publicacion);
         btnPublicar = findViewById(R.id.btn_publicar);
 
+        // Launcher para abrir la galeria y recoger la imagen seleccionada
         galeriaLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -67,6 +65,7 @@ public class PublicacionActivity extends AppCompatActivity {
                 });
 
 
+        // Boton para abrir la galeria
         imagenPublicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,17 +73,19 @@ public class PublicacionActivity extends AppCompatActivity {
             }
         });
 
+        // Boton para publicar
         btnPublicar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                byte[] imagen = utils.convertirImageButtonABlob(imagenPublicacion);
+                byte[] imagen = utils.imageButtonABlob(imagenPublicacion);
                 bd.crearPublicacion(new Publicacion(0, imagen, descripcionPublicacion.getText().toString(), null, 0, 1, "admin"));
             }
         });
 
     }
 
+    // Metodo que llama al launcher de la galeria
     public void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

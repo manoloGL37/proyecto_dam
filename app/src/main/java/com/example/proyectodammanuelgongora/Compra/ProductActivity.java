@@ -36,13 +36,11 @@ public class ProductActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("idProducto", -1);
-        Log.e("Id traido", String.valueOf(id));
 
         bd.conectar();
         p = bd.verProducto(id);
 
         rellenarDatos();
-        Log.e("Producto buscado en bd", p.toString());
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
