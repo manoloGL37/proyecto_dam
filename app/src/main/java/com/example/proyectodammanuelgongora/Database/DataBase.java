@@ -101,7 +101,6 @@ public class DataBase {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                usuarioLog = new Usuario();
                 usuarioLog.setIdUser(resultSet.getInt("id"));
             }
 
@@ -112,6 +111,30 @@ public class DataBase {
         }
 
         return usuarioLog;
+    }
+
+    public Usuario obtenerUsuario(int id) {
+        Usuario usuario = new Usuario();
+
+        if (conn != null) {
+            try {
+            String query = "SELECT * FROM usuario WHERE id = ?";
+
+            PreparedStatement queryUsuario = conn.prepareStatement(query);
+            queryUsuario.setInt(1, id);
+            ResultSet resultUsuario = queryUsuario.executeQuery();
+            if (resultUsuario.next()) {
+                usuario.setIdUser(resultUsuario.getInt("id"));
+                usuario.setNombre(resultUsuario.getString("nombre"));
+                usuario.setNombreUsuario(resultUsuario.getString("nombre_usuario"));
+            }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+        return usuario;
     }
 
     // Ver todos los productos
@@ -183,6 +206,7 @@ public class DataBase {
             String fechaSubida = LocalDateTime.now().format(formatter);
 
             String query = "INSERT INTO publicacion(imagen, descripcion, fecha_subida, likes, id_propietario) VALUES (?, ?, ?, ?, ?)";
+
             PreparedStatement queryPublicacion = conn.prepareStatement(query);
             queryPublicacion.setBytes(1, publicacion.getImagen());
             queryPublicacion.setString(2, publicacion.getDescripcion());
@@ -222,6 +246,23 @@ public class DataBase {
             //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
         }
         return publicaciones;
+    }
+
+    // Incrementar likes
+    public void incrementarLikes(int likes, int id) {
+        if (conn != null) {
+            try {
+                String query = "UPDATE Publicacion SET likes = ? WHERE id_publicacion = ?";
+
+                PreparedStatement queryLikes = conn.prepareStatement(query);
+                queryLikes.setInt(1, likes);
+                queryLikes.setInt(2, id);
+
+                queryLikes.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public boolean comprobarUsuario (String usuario) {

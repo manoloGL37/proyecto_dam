@@ -41,6 +41,7 @@
     <string name="btn_user_pedidos">Pedidos</string>
     <string name="btn_user_publicaciones">Publicaciones</string>
     <string name="btn_user_cerrar_sesion">Cerrar Sesion</string>
+    <string name="mi_cuenta">Mi Cuenta</string>
 
     <!-- fragment_ropa -->
     <string name="camisteas">Camisetas</string>

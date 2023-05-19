@@ -13,6 +13,8 @@ import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Usuario;
 import com.example.proyectodammanuelgongora.R;
 
+import java.util.regex.Pattern;
+
 public class RegistroActivity extends AppCompatActivity {
 
     EditText etiNombre, etiUsuario, etiEmail, etiContrasenya, etiConfContrasenya;
@@ -95,6 +97,17 @@ public class RegistroActivity extends AppCompatActivity {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
 
+        if (validadorEmail(email)) {
+            error = true;
+            Toast.makeText(this, "El email no es válido", Toast.LENGTH_SHORT).show();
+        }
+
         return error;
+    }
+
+    private boolean validadorEmail(String email) {
+        String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        return pattern.matcher(email).matches();
     }
 }

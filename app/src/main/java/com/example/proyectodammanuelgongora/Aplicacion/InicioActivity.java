@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.example.proyectodammanuelgongora.Aplicacion.DatosUsuarioFragment;
 import com.example.proyectodammanuelgongora.Compra.CarritoActivity;
 import com.example.proyectodammanuelgongora.Compra.ProductoActivity;
+import com.example.proyectodammanuelgongora.Database.DataBase;
+import com.example.proyectodammanuelgongora.Modelos.Usuario;
 import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Aplicacion.RopaFragment;
 import com.example.proyectodammanuelgongora.Aplicacion.SocialFragment;
@@ -24,6 +27,8 @@ public class InicioActivity extends AppCompatActivity {
 
     FragmentTransaction transaction;
     Fragment fragmentUsuario, fragmentSocial, fragmentHome;
+    DataBase conexion = new DataBase();
+    Usuario usuario;
 
 
     @Override
@@ -31,13 +36,28 @@ public class InicioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
+        conexion.conectar();
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_inicio);
         setSupportActionBar(myToolbar);
 
+        // Recuperamos id logeado y usario
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("idUsuarioLog", -1);
+
+        // Bundle para pasar id a los fragments
+        Bundle idArgs = new Bundle();
+        idArgs.putInt("idActivityInicio", id);
+
         // Inicializar Fragments
         fragmentUsuario = new DatosUsuarioFragment();
+        fragmentUsuario.setArguments(idArgs);
+
         fragmentSocial = new SocialFragment();
+        fragmentSocial.setArguments(idArgs);
+
         fragmentHome = new RopaFragment();
+        fragmentHome.setArguments(idArgs);
 
         getSupportFragmentManager().beginTransaction().add(R.id.espacio_fragment, fragmentHome).commit();
 

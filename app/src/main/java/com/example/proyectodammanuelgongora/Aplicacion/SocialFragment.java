@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,9 @@ public class SocialFragment extends Fragment {
         conexion = new DataBase();
         conexion.conectar();
 
+        // Recuperamos usuario logeado
+        int id = getArguments().getInt("idActivityInicio");
+
         // Asignacion de recyclerView e inicializacion
         recyclerViewPublicaciones = view.findViewById(R.id.recyclerview_social);
         recyclerViewPublicaciones.setLayoutManager(new GridLayoutManager(getActivity(),1));
@@ -61,6 +65,7 @@ public class SocialFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), PublicacionActivity.class);
+                intent.putExtra("idLogeado", id);
                 startActivity(intent);
             }
         });

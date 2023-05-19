@@ -4,12 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Publicacion;
 import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Utils.Utiles;
@@ -66,6 +69,8 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
 
         ImageView imagenPublicacion;
         TextView descripcion, nombreUsuario, likes;
+        ImageButton btnLikes;
+        DataBase conexion = new DataBase();
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +79,22 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
             imagenPublicacion = itemView.findViewById(R.id.publicacion_user_social);
             descripcion = itemView.findViewById(R.id.descrpcion_social);
             likes = itemView.findViewById(R.id.num_likes_social);
+            btnLikes = itemView.findViewById(R.id.btn_like_social);
+
+            conexion.conectar();
+
+            // Pulsador likes
+            btnLikes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int likesActuales = listaPublicaciones.get(getAdapterPosition()).getLikes();
+                    likesActuales++;
+                    listaPublicaciones.get(getAdapterPosition()).setLikes(likesActuales);
+                    conexion.incrementarLikes(likesActuales, listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
+                    btnLikes.setEnabled(false);
+                    notifyDataSetChanged();
+                }
+            });
 
         }
 
