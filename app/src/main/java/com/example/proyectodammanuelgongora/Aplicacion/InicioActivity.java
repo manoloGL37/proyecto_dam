@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Aplicacion.DatosUsuarioFragment;
+import com.example.proyectodammanuelgongora.Compra.CarritoActivity;
+import com.example.proyectodammanuelgongora.Compra.ProductoActivity;
 import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Aplicacion.RopaFragment;
 import com.example.proyectodammanuelgongora.Aplicacion.SocialFragment;
@@ -75,8 +78,8 @@ public class InicioActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.carrito_toolbar:
-                Snackbar.make(findViewById(android.R.id.content), "Este es el item 2", Snackbar.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "Esta es la opción 2", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, CarritoActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

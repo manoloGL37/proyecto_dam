@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class DataBase {
 
     String bd = "stylepeak";
-    String url = "jdbc:mysql://192.168.0.192:3306/";
+    String url = "jdbc:mysql://192.168.0.194:3306/";
     String user = "root";
     String password = "";
     Connection conn;

@@ -15,7 +15,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/camiseta" />
+        tools:srcCompat="@drawable/sin_imagen" />
 
     <TextView
         android:id="@+id/nombreProducto"
@@ -31,8 +31,9 @@
         android:id="@+id/precioProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/nombreProducto"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreProducto" />
 </androidx.constraintlayout.widget.ConstraintLayout>

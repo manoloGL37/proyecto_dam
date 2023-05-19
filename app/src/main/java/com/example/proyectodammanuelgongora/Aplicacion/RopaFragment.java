@@ -7,14 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Compra.AdaptadorRopa;
-import com.example.proyectodammanuelgongora.Compra.ProductActivity;
+import com.example.proyectodammanuelgongora.Compra.ProductoActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
@@ -70,7 +68,7 @@ public class RopaFragment extends Fragment {
             public void onClick(View v) {
                 posicion = recyclerViewCamisetas.getChildAdapterPosition(v);
                 int id = listaCamisetas.get(posicion).getIdProducto();
-                Intent intent = new Intent(getActivity().getApplicationContext(), ProductActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), ProductoActivity.class);
                 intent.putExtra("idProducto", id);
                 startActivity(intent);
             }

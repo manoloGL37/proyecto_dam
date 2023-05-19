@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Social.PublicacionActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_atras_publicacion"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="A"
-        android:background="@drawable/btn_design"
+        android:background="@drawable/atras"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/nueva_publicacion"
+        android:fontFamily="@font/roboto_bold"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.239"
@@ -32,9 +32,9 @@
     <View
         android:id="@+id/divider"
         android:layout_width="380dp"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="28dp"
-        android:background="?android:attr/listDivider"
+        android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -48,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:background="@drawable/img_subir" />
 
     <EditText
         android:id="@+id/eti_descripcion_publicacion"

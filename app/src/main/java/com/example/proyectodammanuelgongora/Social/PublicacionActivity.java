@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Publicacion;
 import com.example.proyectodammanuelgongora.R;
@@ -25,9 +26,9 @@ import com.example.proyectodammanuelgongora.Utils.Utiles;
 
 public class PublicacionActivity extends AppCompatActivity {
 
-    ImageButton imagenPublicacion;
+    ImageButton imagenPublicacion, btnAtras;
     EditText descripcionPublicacion;
-    Button btnAtras, btnPublicar;
+    Button btnPublicar;
     Utiles utils = new Utiles();
     DataBase bd = new DataBase();
     int idUser;
@@ -73,6 +74,14 @@ public class PublicacionActivity extends AppCompatActivity {
             }
         });
 
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), InicioActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Boton para publicar
         btnPublicar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -80,6 +89,8 @@ public class PublicacionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 byte[] imagen = utils.imageButtonABlob(imagenPublicacion);
                 bd.crearPublicacion(new Publicacion(0, imagen, descripcionPublicacion.getText().toString(), null, 0, 1, "admin"));
+                Intent intent = new Intent(getApplicationContext(), InicioActivity.class);
+                startActivity(intent);
             }
         });
 

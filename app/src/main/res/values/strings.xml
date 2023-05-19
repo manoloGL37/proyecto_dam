@@ -48,4 +48,10 @@
 
     <!-- fragment_social -->
     <string name="btn_agregar_publi">Nueva publicacion</string>
+
+    <!-- activity_carrito -->
+    <string name="titulo_carrito">Carrito</string>
+    <string name="checkout_carrito">Checkout</string>
+    <string name="total_carrito">Total</string>
+    <string name="comprar_carrito">Comprar</string>
 </resources>
