@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Aplicacion.SocialFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_social"
-        android:layout_width="match_parent"
-        android:layout_height="601dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginBottom="125dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_agregar_publi" />
-
     <Button
         android:id="@+id/btn_agregar_publi"
         android:layout_width="match_parent"
@@ -30,4 +18,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_social"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn_agregar_publi"
+        app:layout_constraintBottom_toBottomOf="parent"  />
 </androidx.constraintlayout.widget.ConstraintLayout>

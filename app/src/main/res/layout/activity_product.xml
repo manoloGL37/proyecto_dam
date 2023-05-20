@@ -178,7 +178,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/sin_imagen" />
+        tools:background="@drawable/sin_imagen" />
 
     <ImageButton
         android:id="@+id/btn_volver"

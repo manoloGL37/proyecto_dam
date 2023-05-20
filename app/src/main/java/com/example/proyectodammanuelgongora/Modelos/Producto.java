@@ -8,17 +8,26 @@ public class Producto implements Serializable {
     private int idProducto;
     private String nombreProd;
     private String categoria;
-    private Blob imagen;
+    private byte[] imagen;
     private String descripcion;
     private String talla;
     private int stock;
     private String grupo_producto;
     private double precio;
+    private int numPedido;
 
     public Producto() {
     }
 
-    public Producto(int id_producto, String nombre_prod, String categoria, Blob imagen, String descripcion, String talla, int stock, String grupo_producto, double precio) {
+    // Para carrito
+
+    public Producto(String nombreProd, double precio, int numPedido) {
+        this.nombreProd = nombreProd;
+        this.precio = precio;
+        this.numPedido = numPedido;
+    }
+
+    public Producto(int id_producto, String nombre_prod, String categoria, byte[] imagen, String descripcion, String talla, int stock, String grupo_producto, double precio) {
         this.idProducto = id_producto;
         this.nombreProd = nombre_prod;
         this.categoria = categoria;
@@ -54,11 +63,11 @@ public class Producto implements Serializable {
         this.categoria = categoria;
     }
 
-    public Blob getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(Blob imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
@@ -102,11 +111,19 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
+    public int getNumPedido() {
+        return numPedido;
+    }
+
+    public void setNumPedido(int numPedido) {
+        this.numPedido = numPedido;
+    }
+
     @Override
     public String toString() {
         return "Producto{" +
-                "id_producto=" + idProducto +
-                ", nombre_prod='" + nombreProd + '\'' +
+                "idProducto=" + idProducto +
+                ", nombreProd='" + nombreProd + '\'' +
                 ", categoria='" + categoria + '\'' +
                 ", imagen=" + imagen +
                 ", descripcion='" + descripcion + '\'' +
@@ -114,6 +131,7 @@ public class Producto implements Serializable {
                 ", stock=" + stock +
                 ", grupo_producto='" + grupo_producto + '\'' +
                 ", precio=" + precio +
+                ", numPedido=" + numPedido +
                 '}';
     }
 }

@@ -14,6 +14,7 @@ import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.Modelos.Usuario;
+import com.example.proyectodammanuelgongora.Panel.PanelActivity;
 import com.example.proyectodammanuelgongora.R;
 
 import java.util.ArrayList;
@@ -43,13 +44,20 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), InicioActivity.class);
+
 
                 // Logear usuario
                 Usuario user = conexion.login(username.getText().toString(), password.getText().toString());
                 if (user.getIdUser() != 0) {
-                    i.putExtra("idUsuarioLog", user.getIdUser());
-                    startActivity(i);
+                    if (esAdminOTrabajador(user.getRol())) {
+                        Intent i = new Intent(getApplicationContext(), PanelActivity.class);
+                        i.putExtra("idUsuarioLog", user.getIdUser());
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), InicioActivity.class);
+                        i.putExtra("idUsuarioLog", user.getIdUser());
+                        startActivity(i);
+                    }
                 } else
                     Toast.makeText(LoginActivity.this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show();
             }
@@ -65,5 +73,15 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean esAdminOTrabajador(int rol) {
+        boolean esAdmin = false;
+
+        if (rol == 1 || rol == 2) {
+            esAdmin = true;
+        }
+
+        return esAdmin;
     }
 }

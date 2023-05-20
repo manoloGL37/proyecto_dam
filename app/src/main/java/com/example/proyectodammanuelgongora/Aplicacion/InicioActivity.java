@@ -29,6 +29,7 @@ public class InicioActivity extends AppCompatActivity {
     Fragment fragmentUsuario, fragmentSocial, fragmentHome;
     DataBase conexion = new DataBase();
     Usuario usuario;
+    int idUser;
 
 
     @Override
@@ -43,11 +44,11 @@ public class InicioActivity extends AppCompatActivity {
 
         // Recuperamos id logeado y usario
         Intent intent = getIntent();
-        int id = intent.getIntExtra("idUsuarioLog", -1);
+        idUser = intent.getIntExtra("idUsuarioLog", -1);
 
         // Bundle para pasar id a los fragments
         Bundle idArgs = new Bundle();
-        idArgs.putInt("idActivityInicio", id);
+        idArgs.putInt("idActivityInicio", idUser);
 
         // Inicializar Fragments
         fragmentUsuario = new DatosUsuarioFragment();
@@ -99,6 +100,7 @@ public class InicioActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.carrito_toolbar:
                 Intent intent = new Intent(this, CarritoActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
                 return true;
             default:

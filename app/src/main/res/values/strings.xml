@@ -55,4 +55,13 @@
     <string name="checkout_carrito">Checkout</string>
     <string name="total_carrito">Total</string>
     <string name="comprar_carrito">Comprar</string>
+
+    <!-- activity_panel -->
+    <string name="dashboard">DASHBOARD</string>
+    <string name="btn_panel_ventas">VENTAS</string>
+    <string name="btn_panel_publicaciones">PUBLICACIONES</string>
+    <string name="btn_panel_ajustes">AJUSTES</string>
+    <string name="btn_panel_usuarios">USUARIOS</string>
+    <string name="btn_panel_cerrar_sesion">Cerrar Sesion</string>
+
 </resources>

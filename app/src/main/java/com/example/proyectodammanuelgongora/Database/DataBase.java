@@ -102,6 +102,7 @@ public class DataBase {
 
             if (resultSet.next()) {
                 usuarioLog.setIdUser(resultSet.getInt("id"));
+                usuarioLog.setRol(resultSet.getInt("rol"));
             }
 
         } catch (NoSuchAlgorithmException e) {
@@ -127,6 +128,7 @@ public class DataBase {
                 usuario.setIdUser(resultUsuario.getInt("id"));
                 usuario.setNombre(resultUsuario.getString("nombre"));
                 usuario.setNombreUsuario(resultUsuario.getString("nombre_usuario"));
+                usuario.setRol(resultUsuario.getInt("rol"));
             }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,7 +152,7 @@ public class DataBase {
                     int id_producto = resultProductos.getInt("id_producto");
                     String nombre_prod = resultProductos.getString("nombre_prod");
                     String categoria = resultProductos.getString("categoria");
-                    Blob imagen = resultProductos.getBlob("categoria");
+                    byte[] imagen = resultProductos.getBytes("imagen");
                     String descripcion = resultProductos.getString("descripcion");
                     String talla = resultProductos.getString("descripcion");
                     int stock = resultProductos.getInt("stock");
@@ -181,7 +183,7 @@ public class DataBase {
                     int id_producto = resultProducto.getInt("id_producto");
                     String nombre_prod = resultProducto.getString("nombre_prod");
                     String categoria = resultProducto.getString("categoria");
-                    Blob imagen = resultProducto.getBlob("categoria");
+                    byte[] imagen = resultProducto.getBytes("imagen");
                     String descripcion = resultProducto.getString("descripcion");
                     String talla = resultProducto.getString("descripcion");
                     int stock = resultProducto.getInt("stock");
@@ -301,6 +303,51 @@ public class DataBase {
             }
         }
         return existe;
+    }
+
+    public ArrayList<Producto> verCarrito(int id) {
+        ArrayList<Producto> carrito = new ArrayList<Producto>();
+        if (conn != null) {
+            try {
+                String query = "SELECT precio_prod, nombre_prod, n_pedido FROM carrito c INNER JOIN producto p ON c.id_producto = p.id_producto WHERE propietario_carrito = ?";
+
+                PreparedStatement queryCarrito = conn.prepareStatement(query);
+                queryCarrito.setInt(1, id);
+                ResultSet resultCarrito = queryCarrito.executeQuery();
+                while (resultCarrito.next()) {
+                    Double precioProd = resultCarrito.getDouble("precio_prod");
+                    String nombreProducto = resultCarrito.getString("nombre_prod");
+                    int numPedido = resultCarrito.getInt("n_pedido");
+                    carrito.add(new Producto(nombreProducto, precioProd, numPedido));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return carrito;
+    }
+
+    public double totalCarrito(int nPedido) {
+        double total = 0;
+        if (conn != null) {
+            try {
+                String query = "SELECT SUM(precio_prod) as total FROM carrito WHERE n_pedido = ?";
+
+                PreparedStatement queryCarrito = conn.prepareStatement(query);
+                queryCarrito.setInt(1, nPedido);
+                ResultSet resultCarrito = queryCarrito.executeQuery();
+                while (resultCarrito.next()) {
+                    total = resultCarrito.getDouble("total");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return total;
     }
 
     // Encriptar contraseña en SHA-256

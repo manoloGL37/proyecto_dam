@@ -33,7 +33,6 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
-
         holder.nombreProducto.setText(listaProductos.get(position).getNombreProd());
         holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()) + " €");
 
@@ -67,8 +66,8 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
             super(itemView);
 
             // Relaciones componentes
-            nombreProducto = itemView.findViewById(R.id.eti_precio_prod_carrito);
-            precioProducto = itemView.findViewById(R.id.eti_nombre_prod_carito);
+            nombreProducto = itemView.findViewById(R.id.eti_nombre_prod_carito);
+            precioProducto = itemView.findViewById(R.id.eti_precio_prod_carrito);
 
         }
 

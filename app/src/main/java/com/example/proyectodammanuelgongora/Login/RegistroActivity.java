@@ -97,10 +97,13 @@ public class RegistroActivity extends AppCompatActivity {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
         }
 
+        /* TODO: Arreglar
         if (validadorEmail(email)) {
             error = true;
             Toast.makeText(this, "El email no es válido", Toast.LENGTH_SHORT).show();
         }
+
+         */
 
         return error;
     }
