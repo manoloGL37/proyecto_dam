@@ -1,12 +1,14 @@
 package com.example.proyectodammanuelgongora.Panel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.proyectodammanuelgongora.Compra.ProductoActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
@@ -16,7 +18,9 @@ import com.example.proyectodammanuelgongora.R;
 
 public class PanelActivity extends AppCompatActivity {
 
-    Button btnVentas, btnPublicaciones, btnAjustes, btnUsuarios, btnCerrarSesion;
+    ImageButton btnVentas, btnPublicaciones, btnUsuarios;
+    Button btnCerrarSesion;
+    CardView opUsuarios;
     DataBase conexion = new DataBase();
     int idUser;
     Usuario usuario;
@@ -28,11 +32,14 @@ public class PanelActivity extends AppCompatActivity {
 
         conexion.conectar();
 
+
         btnVentas = findViewById(R.id.btn_panel_ventas);
         btnPublicaciones = findViewById(R.id.btn_panel_publicaciones);
-        btnAjustes = findViewById(R.id.btn_panel_ajustes);
         btnUsuarios = findViewById(R.id.btn_panel_usuarios);
         btnCerrarSesion = findViewById(R.id.btn_panel_cerrar_sesion);
+        opUsuarios = findViewById(R.id.card_view_usuarios);
+
+
 
         Intent intent = getIntent();
         idUser = intent.getIntExtra("idUsuarioLog", -1);
@@ -45,11 +52,14 @@ public class PanelActivity extends AppCompatActivity {
 
         Log.e("Es admin?", String.valueOf(esAdmin));
 
+
         if (esAdmin(usuario)) {
-            btnUsuarios.setVisibility(View.VISIBLE);
+            opUsuarios.setVisibility(View.VISIBLE);
         } else {
-            btnUsuarios.setVisibility(View.INVISIBLE);
+            opUsuarios.setVisibility(View.INVISIBLE);
         }
+
+
 
         btnVentas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +77,6 @@ public class PanelActivity extends AppCompatActivity {
             }
         });
 
-        btnAjustes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PanelActivity.this, AjustesActivity.class);
-                startActivity(intent);
-            }
-        });
 
         btnUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +93,8 @@ public class PanelActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
     }
 

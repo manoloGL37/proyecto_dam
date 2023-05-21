@@ -15,6 +15,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/btn_design"
         android:text="@string/nueva_publicacion"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

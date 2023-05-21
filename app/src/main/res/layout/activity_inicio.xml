@@ -32,12 +32,11 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="12sp"
                 android:text="@string/titulo"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_bold_italic"
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical" />
-
 
         </LinearLayout>
 

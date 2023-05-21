@@ -57,10 +57,12 @@
     <string name="comprar_carrito">Comprar</string>
 
     <!-- activity_panel -->
-    <string name="dashboard">DASHBOARD</string>
+    <string name="panel">PANEL DE CONTROL</string>
     <string name="btn_panel_ventas">VENTAS</string>
     <string name="btn_panel_publicaciones">PUBLICACIONES</string>
-    <string name="btn_panel_ajustes">AJUSTES</string>
+    <string name="btn_panel_mas_producto">AÑADIR \n PRODUCTO</string>
+    <string name="btn_panel_eliminar_producto">ELIMINAR \n PRODUCTO</string>
+    <string name="btn_panel_mod_producto">MODIFICAR \n PRODUCTO</string>
     <string name="btn_panel_usuarios">USUARIOS</string>
     <string name="btn_panel_cerrar_sesion">Cerrar Sesion</string>
 
