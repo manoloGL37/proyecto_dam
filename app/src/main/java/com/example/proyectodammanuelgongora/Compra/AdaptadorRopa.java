@@ -1,5 +1,7 @@
 package com.example.proyectodammanuelgongora.Compra;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
+import com.example.proyectodammanuelgongora.Utils.Utiles;
 
 import java.util.ArrayList;
 
@@ -20,8 +25,11 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
 
     private ArrayList<Producto> listaProductos;
     private View.OnClickListener listener;
+    private Context context;
+    Utiles utiles = new Utiles();
 
-    public AdaptadorRopa(ArrayList<Producto> lista) {
+    public AdaptadorRopa(Context context, ArrayList<Producto> lista) {
+        this.context = context;
         this.listaProductos = lista;
     }
 
@@ -36,7 +44,8 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
         // Rellenar componentes
-        holder.imagenProducto.setImageResource(R.drawable.camiseta);
+        ImageView imageView = utiles.blobAImageView(context, listaProductos.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
+        holder.imagenProducto.setImageDrawable(imageView.getDrawable());
         holder.nombreProducto.setText(listaProductos.get(position).getNombreProd());
         holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()));
 
@@ -62,9 +71,10 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
 
     public class MiViewHolder extends RecyclerView.ViewHolder { //Subclase
 
-        ImageButton imagenProducto;
+        ImageView imagenProducto;
         TextView nombreProducto;
         TextView precioProducto;
+        CardView producto;
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +83,18 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
             imagenProducto = itemView.findViewById(R.id.imagenProducto);
             nombreProducto = itemView.findViewById(R.id.nombreProducto);
             precioProducto = itemView.findViewById(R.id.precioProducto);
+            producto = itemView.findViewById(R.id.cardview_producto);
+
+            producto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int posicion = getAdapterPosition();
+                    int id = listaProductos.get(posicion).getIdProducto();
+                    Intent intent = new Intent(context, ProductoActivity.class);
+                    intent.putExtra("idProducto", id);
+                    context.startActivity(intent);
+                }
+            });
 
         }
 

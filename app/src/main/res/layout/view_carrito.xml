@@ -9,7 +9,7 @@
         android:id="@+id/eti_nombre_prod_carito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/roboto_bold"
         android:text="TextView"

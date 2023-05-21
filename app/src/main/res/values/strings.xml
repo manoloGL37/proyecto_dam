@@ -66,4 +66,14 @@
     <string name="btn_panel_usuarios">USUARIOS</string>
     <string name="btn_panel_cerrar_sesion">Cerrar Sesion</string>
 
+    <!-- activity_mas_producto -->
+    <string name="titlo_mas_producto">Añadir Producto</string>
+    <string name="nombre_prod">Nombre</string>
+    <string name="descripción_prod">Descripción</string>
+    <string name="categoria_prod">Categoría</string>
+    <string name="tallas_prod">Tallas</string>
+    <string name="stock_prod">Stock</string>
+    <string name="precio_prod">Precio</string>
+    <string name="btn_guardar_prod">Guardar</string>
+
 </resources>

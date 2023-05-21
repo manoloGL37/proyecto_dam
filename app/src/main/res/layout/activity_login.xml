@@ -30,7 +30,7 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/eti_login_user"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"

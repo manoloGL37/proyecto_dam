@@ -277,6 +277,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_panel_cerrar_sesion"
+            android:textColor="@color/white"
             android:layout_marginTop="12dp"
             android:layout_marginRight="58dp"
             android:layout_marginLeft="58dp"

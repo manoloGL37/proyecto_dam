@@ -56,10 +56,10 @@ public class RopaFragment extends Fragment {
         listaSudaderas = conexion.verProductos();
 
         // Enviar listas a adaptadores
-        AdaptadorRopa adapterCamis = new AdaptadorRopa(listaCamisetas);
+        AdaptadorRopa adapterCamis = new AdaptadorRopa(getContext(), listaCamisetas);
         recyclerViewCamisetas.setAdapter(adapterCamis);
 
-        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(listaCamisetas);
+        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(getContext(), listaCamisetas);
         recyclerViewSudaderas.setAdapter(adapterSudaderas);
 
         // Listener para cuando se pulse sobre un producto

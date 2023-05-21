@@ -10,9 +10,7 @@ public class Producto implements Serializable {
     private String categoria;
     private byte[] imagen;
     private String descripcion;
-    private String talla;
     private int stock;
-    private String grupo_producto;
     private double precio;
     private int numPedido;
 
@@ -20,22 +18,30 @@ public class Producto implements Serializable {
     }
 
     // Para carrito
-
     public Producto(String nombreProd, double precio, int numPedido) {
         this.nombreProd = nombreProd;
         this.precio = precio;
         this.numPedido = numPedido;
     }
 
-    public Producto(int id_producto, String nombre_prod, String categoria, byte[] imagen, String descripcion, String talla, int stock, String grupo_producto, double precio) {
+    // Devolver procutos
+    public Producto(int id_producto, String nombre_prod, String categoria, byte[] imagen, String descripcion, int stock, double precio) {
         this.idProducto = id_producto;
         this.nombreProd = nombre_prod;
         this.categoria = categoria;
         this.imagen = imagen;
         this.descripcion = descripcion;
-        this.talla = talla;
         this.stock = stock;
-        this.grupo_producto = grupo_producto;
+        this.precio = precio;
+    }
+
+    // Para añadir un nuevo produto
+    public Producto( String nombre_prod, String categoria, byte[] imagen, String descripcion, int stock, double precio) {
+        this.nombreProd = nombre_prod;
+        this.categoria = categoria;
+        this.imagen = imagen;
+        this.descripcion = descripcion;
+        this.stock = stock;
         this.precio = precio;
     }
 
@@ -79,13 +85,6 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getTalla() {
-        return talla;
-    }
-
-    public void setTalla(String talla) {
-        this.talla = talla;
-    }
 
     public int getStock() {
         return stock;
@@ -93,14 +92,6 @@ public class Producto implements Serializable {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public String getGrupo_producto() {
-        return grupo_producto;
-    }
-
-    public void setGrupo_producto(String grupo_producto) {
-        this.grupo_producto = grupo_producto;
     }
 
     public double getPrecio() {
@@ -127,9 +118,7 @@ public class Producto implements Serializable {
                 ", categoria='" + categoria + '\'' +
                 ", imagen=" + imagen +
                 ", descripcion='" + descripcion + '\'' +
-                ", talla='" + talla + '\'' +
                 ", stock=" + stock +
-                ", grupo_producto='" + grupo_producto + '\'' +
                 ", precio=" + precio +
                 ", numPedido=" + numPedido +
                 '}';

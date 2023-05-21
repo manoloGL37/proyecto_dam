@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.proyectodammanuelgongora.Compra.ProductoActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Login.LoginActivity;
 import com.example.proyectodammanuelgongora.Modelos.Usuario;
@@ -18,7 +17,7 @@ import com.example.proyectodammanuelgongora.R;
 
 public class PanelActivity extends AppCompatActivity {
 
-    ImageButton btnVentas, btnPublicaciones, btnUsuarios;
+    ImageButton btnVentas, btnPublicaciones, btnUsuarios, btnMasProducto, btnEliminarProducto, btnModProducto;
     Button btnCerrarSesion;
     CardView opUsuarios;
     DataBase conexion = new DataBase();
@@ -36,6 +35,9 @@ public class PanelActivity extends AppCompatActivity {
         btnVentas = findViewById(R.id.btn_panel_ventas);
         btnPublicaciones = findViewById(R.id.btn_panel_publicaciones);
         btnUsuarios = findViewById(R.id.btn_panel_usuarios);
+        btnMasProducto = findViewById(R.id.btn_panel_mas_producto);
+        btnEliminarProducto = findViewById(R.id.btn_panel_eliminar_producto);
+        btnModProducto = findViewById(R.id.btn_panel_mod_producto);
         btnCerrarSesion = findViewById(R.id.btn_panel_cerrar_sesion);
         opUsuarios = findViewById(R.id.card_view_usuarios);
 
@@ -77,6 +79,29 @@ public class PanelActivity extends AppCompatActivity {
             }
         });
 
+        btnMasProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelActivity.this, MasProductoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelActivity.this, EliminarProductoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnModProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelActivity.this, ModProductoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override

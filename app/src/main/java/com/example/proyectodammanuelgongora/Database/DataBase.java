@@ -139,6 +139,28 @@ public class DataBase {
         return usuario;
     }
 
+    // Crear un nuevo producto
+    public boolean crearProducto(Producto prod) {
+        try {
+
+            String query = "INSERT INTO producto(nombre_prod, categoria, imagen, descripcion, stock, precio) VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement queryProd = conn.prepareStatement(query);
+            queryProd.setString(1, prod.getNombreProd());
+            queryProd.setString(2, prod.getCategoria());
+            queryProd.setBytes(3, prod.getImagen());
+            queryProd.setString(4, prod.getDescripcion());
+            queryProd.setInt(5, prod.getStock());
+            queryProd.setDouble(6, prod.getPrecio());
+
+            queryProd.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     // Ver todos los productos
     public ArrayList<Producto> verProductos() {
         ArrayList<Producto> productos = new ArrayList<Producto>();
@@ -154,11 +176,9 @@ public class DataBase {
                     String categoria = resultProductos.getString("categoria");
                     byte[] imagen = resultProductos.getBytes("imagen");
                     String descripcion = resultProductos.getString("descripcion");
-                    String talla = resultProductos.getString("descripcion");
                     int stock = resultProductos.getInt("stock");
-                    String grupo_producto = resultProductos.getString("grupo_producto");
                     double precio = resultProductos.getDouble("precio");
-                    productos.add(new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, talla, stock, grupo_producto, precio));
+                    productos.add(new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, stock, precio));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,11 +205,9 @@ public class DataBase {
                     String categoria = resultProducto.getString("categoria");
                     byte[] imagen = resultProducto.getBytes("imagen");
                     String descripcion = resultProducto.getString("descripcion");
-                    String talla = resultProducto.getString("descripcion");
                     int stock = resultProducto.getInt("stock");
-                    String grupo_producto = resultProducto.getString("grupo_producto");
                     double precio = resultProducto.getDouble("precio");
-                    producto = new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, talla, stock, grupo_producto, precio);
+                    producto = new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, stock, precio);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
