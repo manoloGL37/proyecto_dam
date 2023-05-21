@@ -11,7 +11,7 @@
     <string name="titulo">Style Peak</string>
 
     <!-- activity_login -->
-    <string name="eti_login_user">Usuario</string>
+    <string name="eti_login_user">Email</string>
     <string name="eti_login_password">Contraseña</string>
     <string name="btn_login">Iniciar Sesion</string>
     <string name="btn_register">Registrarse</string>
@@ -37,9 +37,9 @@
     <string name="btn_volver">Volver</string>
 
     <!-- fragment_datos_usuario -->
-    <string name="btn_user_datos">Datos</string>
-    <string name="btn_user_pedidos">Pedidos</string>
-    <string name="btn_user_publicaciones">Publicaciones</string>
+    <string name="btn_user_datos">Mis Datos</string>
+    <string name="btn_user_pedidos">Mis Pedidos</string>
+    <string name="btn_user_publicaciones">Mis Publicaciones</string>
     <string name="btn_user_cerrar_sesion">Cerrar Sesion</string>
     <string name="mi_cuenta">Mi Cuenta</string>
 

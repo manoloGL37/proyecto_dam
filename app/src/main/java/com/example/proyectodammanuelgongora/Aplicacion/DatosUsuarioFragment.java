@@ -3,6 +3,7 @@ package com.example.proyectodammanuelgongora.Aplicacion;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -24,7 +25,8 @@ import com.example.proyectodammanuelgongora.R;
 public class DatosUsuarioFragment extends Fragment {
 
     TextView holaNombre, noEres;
-    Button btnDatos, btnPedidos, btnPublicaciones, btnCerrarSesion;
+    CardView btnDatos, btnPedidos, btnPublicaciones;
+    Button btnCerrarSesion;
     DataBase conexion = new DataBase();
     Usuario usuarioLog;
 
@@ -44,14 +46,14 @@ public class DatosUsuarioFragment extends Fragment {
         usuarioLog = obtenerUsuarioPorId(id);
 
         holaNombre = vista.findViewById(R.id.eti_nombre_mis_datos);
-        noEres = vista.findViewById(R.id.eti_cerrar_sesion);
-        btnDatos = vista.findViewById(R.id.btn_user_datos);
-        btnPedidos = vista.findViewById(R.id.btn_user_pedidos);
-        btnPublicaciones = vista.findViewById(R.id.btn_user_publicaciones);
+        //noEres = vista.findViewById(R.id.eti_cerrar_sesion);
+        btnDatos = vista.findViewById(R.id.cardview_mis_datos);
+        btnPedidos = vista.findViewById(R.id.cardview_mis_publicaciones);
+        btnPublicaciones = vista.findViewById(R.id.cardview_mis_publicaciones);
         btnCerrarSesion = vista.findViewById(R.id.btn_user_cerrar_sesion);
 
         holaNombre.setText("¡ Hola " + usuarioLog.getNombre() + " !");
-        noEres.setText("¿No eres " + usuarioLog.getNombre() + "?");
+        //noEres.setText("¿No eres " + usuarioLog.getNombre() + "?");
         
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override

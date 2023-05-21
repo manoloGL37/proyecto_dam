@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.LoginActivity">
+    tools:context=".Login.LoginActivity"
+    android:background="@drawable/fondo_degradado">
 
 
     <ImageView
         android:id="@+id/image_login"
-        android:layout_width="240dp"
-        android:layout_height="217dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
