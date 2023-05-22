@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
@@ -24,13 +27,15 @@ import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Social.PublicacionActivity;
 import com.example.proyectodammanuelgongora.Utils.Utiles;
 
-public class MasProductoActivity extends AppCompatActivity {
+public class MasProductoActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    EditText etiNombre, etiDescripcion, etiCategoria, etiStock, etiPrecio;
+    EditText etiNombre, etiDescripcion, etiStock, etiPrecio;
+    Spinner etiCategoria;
     Button btnGuardar;
     ImageButton imagenProd;
     DataBase conexion = new DataBase();
     Utiles utils = new Utiles();
+    String categoria;
 
     private ActivityResultLauncher<Intent> galeriaLauncher;
     private Uri uri = null;
@@ -45,11 +50,18 @@ public class MasProductoActivity extends AppCompatActivity {
 
         etiNombre = findViewById(R.id.eti_nombre_mas_prod);
         etiDescripcion = findViewById(R.id.eti_desc_mas_prod);
-        etiCategoria = findViewById(R.id.eti_cat_mas_prod);
+        etiCategoria = (Spinner) findViewById(R.id.eti_cat_mas_prod);
         etiStock = findViewById(R.id.eti_stock_mas_prod);
         etiPrecio = findViewById(R.id.eti_precio_mas_prod);
         imagenProd = findViewById(R.id.img_prod_mas);
         btnGuardar = findViewById(R.id.btn_mas_prod);
+
+        // Llenamos el spinner
+        ArrayAdapter<CharSequence> adaptadorSpinner = ArrayAdapter.createFromResource(this, R.array.string_array_categorias, android.R.layout.simple_spinner_item);
+
+        adaptadorSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Applicamos el adaptador al Spinner
+        etiCategoria.setAdapter(adaptadorSpinner);
 
         // Launcher para abrir la galeria y recoger la imagen seleccionada
         galeriaLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -76,13 +88,14 @@ public class MasProductoActivity extends AppCompatActivity {
             }
         });
 
+        etiCategoria.setOnItemSelectedListener(this);
+
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String nombre = etiNombre.getText().toString();
                 String descipcion = etiDescripcion.getText().toString();
-                String categoria = etiCategoria.getText().toString();
                 int stock = Integer.parseInt(etiStock.getText().toString());
                 double precio = Double.parseDouble(etiPrecio.getText().toString());
                 byte[] imagen = utils.imageButtonABlob(imagenProd);
@@ -99,6 +112,17 @@ public class MasProductoActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        categoria = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
 
     // Metodo que llama al launcher de la galeria
     public void abrirGaleria() {

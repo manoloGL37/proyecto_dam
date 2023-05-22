@@ -162,23 +162,24 @@ public class DataBase {
     }
 
     // Ver todos los productos
-    public ArrayList<Producto> verProductos() {
+    public ArrayList<Producto> verProductos(String categoria) {
         ArrayList<Producto> productos = new ArrayList<Producto>();
         if (conn != null) {
             try {
-                String query = "SELECT * FROM producto";
+                String query = "SELECT * FROM producto WHERE categoria = ?";
 
                 PreparedStatement queryProductos = conn.prepareStatement(query);
+                queryProductos.setString(1, categoria);
                 ResultSet resultProductos = queryProductos.executeQuery();
                 while (resultProductos.next()) {
                     int id_producto = resultProductos.getInt("id_producto");
                     String nombre_prod = resultProductos.getString("nombre_prod");
-                    String categoria = resultProductos.getString("categoria");
+                    String cat = resultProductos.getString("categoria");
                     byte[] imagen = resultProductos.getBytes("imagen");
                     String descripcion = resultProductos.getString("descripcion");
                     int stock = resultProductos.getInt("stock");
                     double precio = resultProductos.getDouble("precio");
-                    productos.add(new Producto(id_producto, nombre_prod, categoria, imagen, descripcion, stock, precio));
+                    productos.add(new Producto(id_producto, nombre_prod, cat, imagen, descripcion, stock, precio));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,17 +269,45 @@ public class DataBase {
         return publicaciones;
     }
 
+    // Comprobar si el usuario ya ha dado mg anteriormente a la publicacion
+    public boolean comprobarLike(int idUser, int idPublicacion) {
+        boolean darLike = true;
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM mg WHERE id_usuario = ? AND id_publicacion = ?";
+
+                PreparedStatement queryPublicaciones = conn.prepareStatement(query);
+                queryPublicaciones.setInt(1, idUser);
+                queryPublicaciones.setInt(2, idPublicacion);
+                ResultSet resultPublicaciones = queryPublicaciones.executeQuery();
+                if (resultPublicaciones.next()) {
+                    darLike = false;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return darLike;
+    }
+
     // Incrementar likes
-    public void incrementarLikes(int likes, int id) {
+    public void incrementarLikes(int likes, int idPublicacione, int idUser) {
         if (conn != null) {
             try {
                 String query = "UPDATE Publicacion SET likes = ? WHERE id_publicacion = ?";
 
                 PreparedStatement queryLikes = conn.prepareStatement(query);
                 queryLikes.setInt(1, likes);
-                queryLikes.setInt(2, id);
+                queryLikes.setInt(2, idPublicacione);
 
                 queryLikes.executeUpdate();
+
+                String queryMg = "INSERT mg VALUES (?, ?)";
+                PreparedStatement queryTabMg = conn.prepareStatement(queryMg);
+                queryTabMg.setInt(1, idUser);
+                queryTabMg.setInt(2, idPublicacione);
+
+                queryTabMg.executeUpdate();
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -55,7 +55,7 @@ public class SocialFragment extends Fragment {
         listaPublicaciones = conexion.verPublicaciones();
 
         // Enviar lista a adaptador
-        AdaptadorSocial adapterPublicaciones = new AdaptadorSocial(getActivity(), listaPublicaciones);
+        AdaptadorSocial adapterPublicaciones = new AdaptadorSocial(getActivity(), listaPublicaciones, id);
         recyclerViewPublicaciones.setAdapter(adapterPublicaciones);
 
         btnNuvPubli = view.findViewById(R.id.btn_agregar_publi);

@@ -47,8 +47,7 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
         ImageView imageView = utiles.blobAImageView(context, listaProductos.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
         holder.imagenProducto.setImageDrawable(imageView.getDrawable());
         holder.nombreProducto.setText(listaProductos.get(position).getNombreProd());
-        holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()));
-
+        holder.precioProducto.setText(String.valueOf(listaProductos.get(position).getPrecio()) + " €");
     }
 
     @Override

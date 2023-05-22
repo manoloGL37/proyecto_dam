@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +26,12 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
     private ArrayList<Publicacion> listaPublicaciones;
     private Context context;
     private View.OnClickListener listener;
+    private int idUsuario;
 
-    public AdaptadorSocial(Context context, ArrayList<Publicacion> lista) {
+    public AdaptadorSocial(Context context, ArrayList<Publicacion> lista, int idUsuario) {
         this.context = context;
         this.listaPublicaciones = lista;
+        this.idUsuario = idUsuario;
     }
 
     @NonNull
@@ -87,12 +90,17 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
             btnLikes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int likesActuales = listaPublicaciones.get(getAdapterPosition()).getLikes();
+                    Publicacion publicacion = listaPublicaciones.get(getAdapterPosition());
+                    int likesActuales = publicacion.getLikes();
                     likesActuales++;
                     listaPublicaciones.get(getAdapterPosition()).setLikes(likesActuales);
-                    conexion.incrementarLikes(likesActuales, listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
-                    btnLikes.setEnabled(false);
-                    notifyDataSetChanged();
+                    if (conexion.comprobarLike(idUsuario, publicacion.getIdPublicacion())) {
+                        conexion.incrementarLikes(likesActuales, publicacion.getIdPublicacion(), idUsuario);
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(context, "No puede dar más de un like a una publicación", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 

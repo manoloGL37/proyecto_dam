@@ -50,16 +50,16 @@ public class RopaFragment extends Fragment {
         recyclerViewSudaderas.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         listaCamisetas = new ArrayList<>();
-        listaCamisetas = conexion.verProductos();
+        listaCamisetas = conexion.verProductos("Camiseta");
 
         listaSudaderas = new ArrayList<>();
-        listaSudaderas = conexion.verProductos();
+        listaSudaderas = conexion.verProductos("Sudadera");
 
         // Enviar listas a adaptadores
         AdaptadorRopa adapterCamis = new AdaptadorRopa(getContext(), listaCamisetas);
         recyclerViewCamisetas.setAdapter(adapterCamis);
 
-        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(getContext(), listaCamisetas);
+        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(getContext(), listaSudaderas);
         recyclerViewSudaderas.setAdapter(adapterSudaderas);
 
         // Listener para cuando se pulse sobre un producto
