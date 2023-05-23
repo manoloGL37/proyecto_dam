@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Publicacion;
 import com.example.proyectodammanuelgongora.R;
@@ -37,18 +36,14 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
     @NonNull
     @Override
     public MiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_social,null,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_social, parent, false);
         view.setOnClickListener(this);
         return new MiViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
-        holder.nombreUsuario.setText(listaPublicaciones.get(position).getNombre_usuario());
-        ImageView imageView = utiles.blobAImageView(context, listaPublicaciones.get(position).getImagen()); // Pasamos la imagen en bytes y se convierte a ImageView
-        holder.imagenPublicacion.setImageDrawable(imageView.getDrawable());
-        holder.descripcion.setText(listaPublicaciones.get(position).getDescripcion());
-        holder.likes.setText(String.valueOf(listaPublicaciones.get(position).getLikes()));
+        holder.rellenarEtis(listaPublicaciones.get(position));
     }
 
     @Override
@@ -56,13 +51,13 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
         return listaPublicaciones.size();
     }
 
-    public void  setOnClickListener(View.OnClickListener listener) {
+    public void setOnClickListener(View.OnClickListener listener) {
         this.listener = listener;
     }
 
     @Override
     public void onClick(View v) {
-        if(listener!=null) {
+        if (listener != null) {
             listener.onClick(v);
         }
     }
@@ -72,8 +67,10 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
 
         ImageView imagenPublicacion;
         TextView descripcion, nombreUsuario, likes;
-        ImageButton btnLikes;
+        LottieAnimationView btnLikes;
         DataBase conexion = new DataBase();
+
+        boolean like = false;
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,29 +81,52 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
             likes = itemView.findViewById(R.id.num_likes_social);
             btnLikes = itemView.findViewById(R.id.btn_like_social);
 
-            conexion.conectar();
-
             // Pulsador likes
             btnLikes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Publicacion publicacion = listaPublicaciones.get(getAdapterPosition());
-                    int likesActuales = publicacion.getLikes();
-                    likesActuales++;
-                    listaPublicaciones.get(getAdapterPosition()).setLikes(likesActuales);
-                    if (conexion.comprobarLike(idUsuario, publicacion.getIdPublicacion())) {
-                        conexion.incrementarLikes(likesActuales, publicacion.getIdPublicacion(), idUsuario);
-                        notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(context, "No puede dar más de un like a una publicación", Toast.LENGTH_SHORT).show();
-                    }
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Publicacion publicacion = listaPublicaciones.get(position);
+                        int likesActuales = publicacion.getLikes();
+                        likesActuales++;
+                        listaPublicaciones.get(position).setLikes(likesActuales);
+                        if (conexion.comprobarLike(idUsuario, publicacion.getIdPublicacion())) {
+                            conexion.incrementarLikes(likesActuales, publicacion.getIdPublicacion(), idUsuario);
+                            notifyDataSetChanged();
+                            like = animacionLike(btnLikes, R.raw.animacion_like, like);
+                        } else {
+                            Toast.makeText(context, "No puede dar más de un like a una publicación", Toast.LENGTH_SHORT).show();
+                        }
 
+                    }
                 }
             });
-
         }
 
+        public void rellenarEtis(Publicacion publicacion) {
+            nombreUsuario.setText(publicacion.getNombre_usuario());
+            ImageView imageView = utiles.blobAImageView(context, publicacion.getImagen());
+            imagenPublicacion.setImageDrawable(imageView.getDrawable());
+            descripcion.setText(publicacion.getDescripcion());
+            likes.setText(String.valueOf(publicacion.getLikes()));
 
+            conexion.conectar();
+            if (!conexion.comprobarLike(idUsuario, publicacion.getIdPublicacion())) {
+                like = true;
+                btnLikes.setAnimation(R.raw.animacion_like);
+                btnLikes.playAnimation();
+            }
+        }
+
+        private Boolean animacionLike(LottieAnimationView imageView, int animacion, boolean like) {
+            if (!like) {
+                imageView.setAnimation(animacion);
+                imageView.playAnimation();
+            } else {
+                imageView.setImageResource(R.drawable.like);
+            }
+            return !like;
+        }
     }
-
 }

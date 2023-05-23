@@ -18,10 +18,9 @@ public class Producto implements Serializable {
     }
 
     // Para carrito
-    public Producto(String nombreProd, double precio, int numPedido) {
+    public Producto(String nombreProd, double precio) {
         this.nombreProd = nombreProd;
         this.precio = precio;
-        this.numPedido = numPedido;
     }
 
     // Devolver procutos

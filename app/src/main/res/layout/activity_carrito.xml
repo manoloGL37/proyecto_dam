@@ -57,6 +57,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/carrito_vacio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCarrito"
         android:layout_width="match_parent"
@@ -69,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
     <View
-        android:id="@+id/divider4"
+        android:id="@+id/divider_inferior"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginStart="8dp"
@@ -83,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewCarrito" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/texto_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -93,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_inferior" />
 
     <TextView
         android:id="@+id/eti_total_carrito"
@@ -106,14 +117,15 @@
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+        app:layout_constraintStart_toEndOf="@+id/texto_total"
+        app:layout_constraintTop_toBottomOf="@+id/divider_inferior" />
 
     <Button
         android:id="@+id/btn_comprar_carrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
+        android:textColor="@color/white"
         android:text="@string/comprar_carrito"
         android:background="@drawable/btn_design"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -27,10 +27,12 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
     private View.OnClickListener listener;
     private Context context;
     Utiles utiles = new Utiles();
+    private int idUser;
 
-    public AdaptadorRopa(Context context, ArrayList<Producto> lista) {
+    public AdaptadorRopa(Context context, ArrayList<Producto> lista, int idUser) {
         this.context = context;
         this.listaProductos = lista;
+        this.idUser = idUser;
     }
 
     @NonNull
@@ -90,7 +92,10 @@ public class AdaptadorRopa extends RecyclerView.Adapter<AdaptadorRopa.MiViewHold
                     int posicion = getAdapterPosition();
                     int id = listaProductos.get(posicion).getIdProducto();
                     Intent intent = new Intent(context, ProductoActivity.class);
-                    intent.putExtra("idProducto", id);
+                    ArrayList<Integer> ids = new ArrayList<>();
+                    ids.add(id);
+                    ids.add(idUser);
+                    intent.putIntegerArrayListExtra("ids", ids);
                     context.startActivity(intent);
                 }
             });

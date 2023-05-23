@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class RopaFragment extends Fragment {
     int posicion;
     Producto p;
     DataBase conexion;
+    int idUser;
 
     public RopaFragment() {
         // Required empty public constructor
@@ -42,6 +44,8 @@ public class RopaFragment extends Fragment {
         conexion = new DataBase();
         conexion.conectar();
 
+        idUser = getArguments().getInt("idActivityInicio");
+
         // Asignacion de recyclerViews e inicializacion
         recyclerViewCamisetas = view.findViewById(R.id.recyclerview_camisetas);
         recyclerViewCamisetas.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -56,10 +60,10 @@ public class RopaFragment extends Fragment {
         listaSudaderas = conexion.verProductos("Sudadera");
 
         // Enviar listas a adaptadores
-        AdaptadorRopa adapterCamis = new AdaptadorRopa(getContext(), listaCamisetas);
+        AdaptadorRopa adapterCamis = new AdaptadorRopa(getContext(), listaCamisetas, idUser);
         recyclerViewCamisetas.setAdapter(adapterCamis);
 
-        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(getContext(), listaSudaderas);
+        AdaptadorRopa adapterSudaderas = new AdaptadorRopa(getContext(), listaSudaderas, idUser);
         recyclerViewSudaderas.setAdapter(adapterSudaderas);
 
         // Listener para cuando se pulse sobre un producto
@@ -67,10 +71,14 @@ public class RopaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 posicion = recyclerViewCamisetas.getChildAdapterPosition(v);
-                int id = listaCamisetas.get(posicion).getIdProducto();
-                Intent intent = new Intent(getActivity().getApplicationContext(), ProductoActivity.class);
-                intent.putExtra("idProducto", id);
-                startActivity(intent);
+                int idProd = listaCamisetas.get(posicion).getIdProducto();
+                //Intent intent = new Intent(getActivity().getApplicationContext(), ProductoActivity.class);
+                ArrayList<Integer> ids = new ArrayList<>();
+                ids.add(idProd);
+                ids.add(idUser);
+                Log.e("Array que se manda", ids.toString());
+                //intent.putIntegerArrayListExtra("ids", ids);
+                //startActivity(intent);
             }
         });
 

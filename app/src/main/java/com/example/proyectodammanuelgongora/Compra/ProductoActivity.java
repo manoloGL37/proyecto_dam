@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
@@ -16,15 +18,19 @@ import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Utils.Utiles;
 
+import java.util.ArrayList;
+
 public class ProductoActivity extends AppCompatActivity {
 
     TextView nombreProd, precioProd, descripcionProd;
     ImageView imagenProd;
     Producto p;
-    DataBase bd = new DataBase();
+    DataBase conexion = new DataBase();
     ImageButton btnVolver;
     Button btnCarrito;
     Utiles utiles = new Utiles();
+    int idProd;
+    int idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +44,16 @@ public class ProductoActivity extends AppCompatActivity {
         btnCarrito = findViewById(R.id.btn_carrito);
         imagenProd = findViewById(R.id.imagen_producto);
 
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("idProducto", -1);
+        Bundle bun = getIntent().getExtras();
 
-        bd.conectar();
-        p = bd.verProducto(id);
+        ArrayList<Integer> ids = bun.getIntegerArrayList("ids");
+        idProd = ids.get(0);
+        idUser = ids.get(1);
+
+        Log.e("Array recibido", ids.toString());
+
+        conexion.conectar();
+        p = conexion.verProducto(idProd);
 
         rellenarDatos();
 
@@ -50,6 +61,7 @@ public class ProductoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), InicioActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });
@@ -59,8 +71,8 @@ public class ProductoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO:
                 // Añadir producto al carrito del id logeado
-
-
+                conexion.enviarAlCarrito(idUser, p);
+                Toast.makeText(ProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
             }
         });
 

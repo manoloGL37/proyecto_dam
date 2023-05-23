@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
@@ -21,9 +22,13 @@ import java.util.ArrayList;
 public class CarritoActivity extends AppCompatActivity {
 
     RecyclerView recyclerViewCarrito;
-    TextView total;
+    TextView total , textTotal;
     Button btnComprar;
     ImageButton btnVolver;
+    LottieAnimationView carritoVacio;
+
+    View divider;
+
     DataBase conexion = new DataBase();
     ArrayList<Producto> carrito;
     int idUser;
@@ -36,8 +41,11 @@ public class CarritoActivity extends AppCompatActivity {
         recyclerViewCarrito = findViewById(R.id.recyclerViewCarrito);
         recyclerViewCarrito.setLayoutManager(new GridLayoutManager(this,1));
         total = findViewById(R.id.eti_total_carrito);
+        carritoVacio = findViewById(R.id.carrito_vacio);
         btnComprar = findViewById(R.id.btn_comprar_carrito);
         btnVolver = findViewById(R.id.btn_volver_carrito);
+        divider = findViewById(R.id.divider_inferior);
+        textTotal = findViewById(R.id.texto_total);
 
 
         conexion.conectar();
@@ -47,10 +55,25 @@ public class CarritoActivity extends AppCompatActivity {
         carrito = new ArrayList<>();
         carrito = conexion.verCarrito(idUser);
 
-        AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito);
-        recyclerViewCarrito.setAdapter(adapterCarrito);
+        if (carrito.size() > 0) {
+            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito);
+            recyclerViewCarrito.setAdapter(adapterCarrito);
 
-        total.setText(String.valueOf(conexion.totalCarrito(carrito.get(0).getNumPedido())) + " €");
+            //total.setText(String.valueOf(conexion.totalCarrito(carrito.get(0).getNumPedido())) + " €");
+            carritoVacio.setVisibility(View.INVISIBLE);
+            recyclerViewCarrito.setVisibility(View.VISIBLE);
+            divider.setVisibility(View.VISIBLE);
+            textTotal.setVisibility(View.VISIBLE);
+            total.setVisibility(View.VISIBLE);
+        } else {
+            carritoVacio.setVisibility(View.VISIBLE);
+            carritoVacio.setAnimation(R.raw.carrito_vacio);
+            carritoVacio.playAnimation();
+            recyclerViewCarrito.setVisibility(View.INVISIBLE);
+            divider.setVisibility(View.INVISIBLE);
+            textTotal.setVisibility(View.INVISIBLE);
+            total.setVisibility(View.INVISIBLE);
+        }
 
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override

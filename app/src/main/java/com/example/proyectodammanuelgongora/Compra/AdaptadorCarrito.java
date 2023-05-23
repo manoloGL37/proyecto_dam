@@ -3,6 +3,7 @@ package com.example.proyectodammanuelgongora.Compra;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -61,6 +62,7 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
 
         TextView nombreProducto;
         TextView precioProducto;
+        ImageButton eliminarProducto;
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +70,16 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
             // Relaciones componentes
             nombreProducto = itemView.findViewById(R.id.eti_nombre_prod_carito);
             precioProducto = itemView.findViewById(R.id.eti_precio_prod_carrito);
+            eliminarProducto = itemView.findViewById(R.id.btn_eliminar_carrito);
+
+            eliminarProducto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listaProductos.remove(getAdapterPosition());
+                    //TODO: Eliminar en bd
+                    notifyDataSetChanged();
+                }
+            });
 
         }
 

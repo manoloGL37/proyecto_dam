@@ -172,7 +172,7 @@ public class DataBase {
                 queryProductos.setString(1, categoria);
                 ResultSet resultProductos = queryProductos.executeQuery();
                 while (resultProductos.next()) {
-                    int id_producto = resultProductos.getInt("id_producto");
+                    int id_producto = resultProductos.getInt("id");
                     String nombre_prod = resultProductos.getString("nombre_prod");
                     String cat = resultProductos.getString("categoria");
                     byte[] imagen = resultProductos.getBytes("imagen");
@@ -195,13 +195,13 @@ public class DataBase {
         Producto producto = new Producto();
         if (conn != null) {
             try {
-                String query = "SELECT * FROM producto WHERE id_producto = ?";
+                String query = "SELECT * FROM producto WHERE id = ?";
 
                 PreparedStatement queryProducto = conn.prepareStatement(query);
                 queryProducto.setInt(1, id);
                 ResultSet resultProducto = queryProducto.executeQuery();
                 if (resultProducto.next()) {
-                    int id_producto = resultProducto.getInt("id_producto");
+                    int id_producto = resultProducto.getInt("id");
                     String nombre_prod = resultProducto.getString("nombre_prod");
                     String categoria = resultProducto.getString("categoria");
                     byte[] imagen = resultProducto.getBytes("imagen");
@@ -352,20 +352,73 @@ public class DataBase {
         return existe;
     }
 
+    public void enviarAlCarrito(int idUser, Producto prod) {
+        try {
+
+            int cantidad = comprobarCarrito(idUser, prod.getIdProducto());
+            if (cantidad > 0) {
+                cantidad++;
+
+                String query = "UPDATE carrito SET cantidad = ? WHERE propietario_carrito = ? AND id_producto = ?";
+
+                PreparedStatement queryEnviarCarrito = conn.prepareStatement(query);
+                queryEnviarCarrito.setInt(1, cantidad);
+                queryEnviarCarrito.setInt(2, idUser);
+                queryEnviarCarrito.setInt(3, prod.getIdProducto());
+
+                queryEnviarCarrito.executeUpdate();
+
+            } else {
+
+                String query = "INSERT INTO carrito(propietario_carrito, id_producto, cantidad) VALUES (?, ?, ?)";
+
+                PreparedStatement queryEnviarCarrito = conn.prepareStatement(query);
+                queryEnviarCarrito.setInt(1, idUser);
+                queryEnviarCarrito.setInt(2, prod.getIdProducto());
+                queryEnviarCarrito.setInt(3, 1);
+
+                queryEnviarCarrito.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int comprobarCarrito(int idUser, int idProd) {
+        int cantidad = 0;
+
+        String query = "SELECT cantidad FROM carrito WHERE propietario_carrito = ? AND id_producto = ?";
+
+        try {
+        PreparedStatement queryCantidadCarrito = conn.prepareStatement(query);
+        queryCantidadCarrito.setInt(1, idUser);
+        queryCantidadCarrito.setInt(2, idProd);
+        ResultSet resultCantidad = queryCantidadCarrito.executeQuery();
+
+        if (resultCantidad.next()) {
+            cantidad = resultCantidad.getInt("cantidad");
+        }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cantidad;
+    }
+
     public ArrayList<Producto> verCarrito(int id) {
         ArrayList<Producto> carrito = new ArrayList<Producto>();
         if (conn != null) {
             try {
-                String query = "SELECT precio_prod, nombre_prod, n_pedido FROM carrito c INNER JOIN producto p ON c.id_producto = p.id_producto WHERE propietario_carrito = ?";
+                String query = "SELECT precio, nombre_prod FROM carrito c INNER JOIN producto p ON c.id_producto = p.id WHERE propietario_carrito = ?";
 
                 PreparedStatement queryCarrito = conn.prepareStatement(query);
                 queryCarrito.setInt(1, id);
                 ResultSet resultCarrito = queryCarrito.executeQuery();
                 while (resultCarrito.next()) {
-                    Double precioProd = resultCarrito.getDouble("precio_prod");
+                    Double precioProd = resultCarrito.getDouble("precio");
                     String nombreProducto = resultCarrito.getString("nombre_prod");
-                    int numPedido = resultCarrito.getInt("n_pedido");
-                    carrito.add(new Producto(nombreProducto, precioProd, numPedido));
+                    carrito.add(new Producto(nombreProducto, precioProd));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
