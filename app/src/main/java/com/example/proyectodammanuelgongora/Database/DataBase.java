@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.example.proyectodammanuelgongora.Modelos.Direccion;
+import com.example.proyectodammanuelgongora.Modelos.Pedido;
+import com.example.proyectodammanuelgongora.Modelos.PedidoDetalles;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.Modelos.Publicacion;
 import com.example.proyectodammanuelgongora.Modelos.Usuario;
@@ -462,7 +464,6 @@ public class DataBase {
     }
 
     public void insertarDireccion(Direccion direccion) {
-
         try {
 
             String query = "INSERT INTO Direccion (id_usuario, calle, numero, ciudad, pais, cp) VALUES (?, ?, ?, ?, ?, ?)";
@@ -482,7 +483,6 @@ public class DataBase {
     }
 
     public void actualizarDireccion(Direccion direccion) {
-
         try {
 
             String query = "UPDATE Direccion SET calle = ?, numero = ?, ciudad = ?, pais = ?, cp = ? WHERE id = ?";
@@ -500,6 +500,92 @@ public class DataBase {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
         }
 
+    }
+
+    public int obtenerIdDireccion(int idUser) {
+        int idDireccion = 0;
+
+        try {
+
+            String query = "SELECT id FROM direccion WHERE id_usuario = ?";
+
+            PreparedStatement queryIdDireccion = conn.prepareStatement(query);
+            queryIdDireccion.setInt(1, idUser);
+            ResultSet resultIdDireccion = queryIdDireccion.executeQuery();
+            if (resultIdDireccion.next()) {
+                idDireccion = resultIdDireccion.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+
+        return idDireccion;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void realizarCompra(Pedido pedido, int idUser, PedidoDetalles pedidoDetalles) {
+        insertarPedido(pedido);
+
+        borrarCarrito(idUser);
+
+        insertarDetallesPedido(pedidoDetalles);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void insertarPedido(Pedido pedido) {
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String fechaPedido = LocalDateTime.now().format(formatter);
+
+            String query = "INSERT INTO Pedido (propietario_pedido, total_pedido, id_direccion, fecha_pedido) VALUES (?, ?, ?, ?)";
+
+            PreparedStatement queryInsertPedido = conn.prepareStatement(query);
+            queryInsertPedido = conn.prepareStatement(query);
+            queryInsertPedido.setInt(1, pedido.getIdPedido());
+            queryInsertPedido.setDouble(2, pedido.getTotalPedido());
+            queryInsertPedido.setInt(3, pedido.getIdDireccion());
+            queryInsertPedido.setString(4, fechaPedido);
+            queryInsertPedido.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void borrarCarrito(int idUser) {
+        try {
+
+            String query = "DELETE FROM Carrito WHERE id_usuario = ?";
+
+            PreparedStatement queryDeleteCarrito = conn.prepareStatement(query);
+            queryDeleteCarrito = conn.prepareStatement(query);
+            queryDeleteCarrito.setInt(1, idUser);
+            queryDeleteCarrito.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void insertarDetallesPedido(PedidoDetalles pedidoDetalles) {
+        try {
+
+            String query = "INSERT INTO Pedido_producto (id_pedido, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)";
+
+            PreparedStatement queryInsertPedidoDetalles = conn.prepareStatement(query);
+            queryInsertPedidoDetalles = conn.prepareStatement(query);
+            queryInsertPedidoDetalles.setInt(1, pedidoDetalles.getIdPedido());
+            queryInsertPedidoDetalles.setInt(2, pedidoDetalles.getIdProducto());
+            queryInsertPedidoDetalles.setInt(3, pedidoDetalles.getCantidad());
+            queryInsertPedidoDetalles.setDouble(4, pedidoDetalles.getPrecio());
+            queryInsertPedidoDetalles.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public double totalCarrito(int nPedido) {

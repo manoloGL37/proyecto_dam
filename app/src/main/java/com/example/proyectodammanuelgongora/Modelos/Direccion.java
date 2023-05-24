@@ -36,6 +36,17 @@ public class Direccion {
         this.cp = cp;
     }
 
+    // Update
+    public Direccion(int idDireccion ,int idUsuario, String calle, String numero, String ciudad, String pais, String cp) {
+        this.idDireccion = idDireccion;
+        this.idUsuario = idUsuario;
+        this.calle = calle;
+        this.numero = numero;
+        this.ciudad = ciudad;
+        this.pais = pais;
+        this.cp = cp;
+    }
+
     public int getIdDireccion() {
         return idDireccion;
     }
