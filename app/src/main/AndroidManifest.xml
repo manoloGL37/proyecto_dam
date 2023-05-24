@@ -22,6 +22,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".Compra.DireccionYPagoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Panel.ModProductoActivity"
             android:exported="false">
             <meta-data
@@ -86,13 +93,6 @@
         </activity>
         <activity
             android:name=".MiCuenta.MisPublicacionesActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Compra.CarritoActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

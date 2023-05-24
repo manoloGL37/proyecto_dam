@@ -12,28 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
-        android:text="Dirección"
+        android:text="@string/titulo_direccion"
         android:textAlignment="center"
         android:textSize="36dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="66dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/eti_calle_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_marginRight="26dp"
         android:layout_marginLeft="26dp"
         android:ems="10"
-        android:hint="Calle"
+        android:hint="@string/eti_calle_pago"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/eti_num_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -41,13 +41,13 @@
         android:inputType="textPersonName"
         android:layout_marginRight="26dp"
         android:layout_marginLeft="26dp"
-        android:hint="Número"
+        android:hint="@string/eti_num_pago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/eti_calle_pago" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/eti_ciudad_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -55,13 +55,13 @@
         android:inputType="textPersonName"
         android:layout_marginRight="26dp"
         android:layout_marginLeft="26dp"
-        android:hint="Ciudad"
+        android:hint="@string/eti_ciudad_pago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/eti_num_pago" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/eti_pais_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -69,13 +69,13 @@
         android:inputType="textPersonName"
         android:layout_marginRight="26dp"
         android:layout_marginLeft="26dp"
-        android:hint="Pais"
+        android:hint="@string/eti_pais_pago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:layout_constraintTop_toBottomOf="@+id/eti_ciudad_pago" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/eti_cp_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
@@ -83,32 +83,32 @@
         android:inputType="textPersonName"
         android:layout_marginRight="26dp"
         android:layout_marginLeft="26dp"
-        android:hint="Codigo postal"
+        android:hint="@string/eti_cp_pago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/eti_pais_pago" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
-        android:text="Tarjeta de crédito"
+        android:text="@string/titulo_pago"
         android:textAlignment="center"
         android:textSize="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/eti_cp_pago" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/eti_tarjeta_pago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="26dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="26dp"
         android:ems="10"
-        android:hint="Número"
+        android:hint="@string/eti_tarjeta_pago"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
@@ -116,13 +116,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <Button
+        android:id="@+id/btn_pagar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="26dp"
-        android:text="PAGAR"
+        android:text="@string/btn_pagar"
         android:textColor="@color/white"
         android:background="@drawable/btn_design"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/compra_hecha"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

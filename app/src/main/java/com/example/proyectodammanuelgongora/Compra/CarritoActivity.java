@@ -87,7 +87,11 @@ public class CarritoActivity extends AppCompatActivity {
         btnComprar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO:
+                if (carrito.size() > 0) {
+                    Intent intent = new Intent(getApplicationContext(), DireccionYPagoActivity.class);
+                    intent.putExtra("idUsuarioLog", idUser);
+                    startActivity(intent);
+                }
             }
         });
 

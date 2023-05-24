@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.proyectodammanuelgongora.Modelos.Direccion;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.Modelos.Publicacion;
 import com.example.proyectodammanuelgongora.Modelos.Usuario;
@@ -427,6 +428,78 @@ public class DataBase {
             //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
         }
         return carrito;
+    }
+
+    public Direccion verDireccion(int idUser) {
+        Direccion direccion = new Direccion();
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM direccion WHERE id_usuario = ?";
+
+                PreparedStatement queryDireccion = conn.prepareStatement(query);
+                queryDireccion.setInt(1, idUser);
+                ResultSet resultDireccion = queryDireccion.executeQuery();
+                if (resultDireccion.next()) {
+                    direccion.setIdDireccion(resultDireccion.getInt("id"));
+                    direccion.setIdUsuario(resultDireccion.getInt("id_usuario"));
+                    direccion.setCalle(resultDireccion.getString("calle"));
+                    direccion.setNumero(resultDireccion.getString("numero"));
+                    direccion.setCiudad(resultDireccion.getString("ciudad"));
+                    direccion.setPais(resultDireccion.getString("pais"));
+                    direccion.setCp(resultDireccion.getString("cp"));
+                    direccion.setTieneDireccion(true);
+                } else {
+                    direccion.setTieneDireccion(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+
+        return direccion;
+    }
+
+    public void insertarDireccion(Direccion direccion) {
+
+        try {
+
+            String query = "INSERT INTO Direccion (id_usuario, calle, numero, ciudad, pais, cp) VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement queryInsertDireccion = conn.prepareStatement(query);
+            queryInsertDireccion.setInt(1, direccion.getIdUsuario());
+            queryInsertDireccion.setString(2, direccion.getCalle());
+            queryInsertDireccion.setString(3, direccion.getNumero());
+            queryInsertDireccion.setString(4, direccion.getCiudad());
+            queryInsertDireccion.setString(5, direccion.getPais());
+            queryInsertDireccion.setString(6, direccion.getCp());
+            queryInsertDireccion.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void actualizarDireccion(Direccion direccion) {
+
+        try {
+
+            String query = "UPDATE Direccion SET calle = ?, numero = ?, ciudad = ?, pais = ?, cp = ? WHERE id = ?";
+
+            PreparedStatement queryUpdateDireccion = conn.prepareStatement(query);
+            queryUpdateDireccion.setString(1, direccion.getCalle());
+            queryUpdateDireccion.setString(2, direccion.getNumero());
+            queryUpdateDireccion.setString(3, direccion.getCiudad());
+            queryUpdateDireccion.setString(4, direccion.getPais());
+            queryUpdateDireccion.setString(5, direccion.getCp());
+            queryUpdateDireccion.setInt(6, direccion.getIdDireccion());
+            queryUpdateDireccion.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+
     }
 
     public double totalCarrito(int nPedido) {

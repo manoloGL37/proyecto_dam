@@ -76,4 +76,14 @@
     <string name="precio_prod">Precio</string>
     <string name="btn_guardar_prod">Guardar</string>
 
+    <!-- activity_direccion_y_pago -->
+    <string name="titulo_direccion">Dirección</string>
+    <string name="titulo_pago">Pago</string>
+    <string name="eti_calle_pago">Calle</string>
+    <string name="eti_num_pago">Número</string>
+    <string name="eti_ciudad_pago">Ciudad</string>
+    <string name="eti_pais_pago">País</string>
+    <string name="eti_cp_pago">Código Postal</string>
+    <string name="eti_tarjeta_pago">Número tarjeta de crédito</string>
+    <string name="btn_pagar">PAGAR</string>
 </resources>
