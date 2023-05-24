@@ -71,8 +71,12 @@ public class ProductoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO:
                 // Añadir producto al carrito del id logeado
-                conexion.enviarAlCarrito(idUser, p);
-                Toast.makeText(ProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
+                boolean ok = conexion.enviarAlCarrito(idUser, p);
+                if (ok) {
+                    Toast.makeText(ProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProductoActivity.this, "El producto ya se encuentra en el carrito", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

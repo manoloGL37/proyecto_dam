@@ -56,10 +56,10 @@ public class CarritoActivity extends AppCompatActivity {
         carrito = conexion.verCarrito(idUser);
 
         if (carrito.size() > 0) {
-            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito);
+            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito, idUser);
             recyclerViewCarrito.setAdapter(adapterCarrito);
 
-            //total.setText(String.valueOf(conexion.totalCarrito(carrito.get(0).getNumPedido())) + " €");
+            total.setText(String.valueOf(conexion.totalCarrito(idUser) + " €"));
             carritoVacio.setVisibility(View.INVISIBLE);
             recyclerViewCarrito.setVisibility(View.VISIBLE);
             divider.setVisibility(View.VISIBLE);

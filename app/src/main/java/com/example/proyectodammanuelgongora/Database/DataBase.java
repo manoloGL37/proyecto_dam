@@ -355,73 +355,64 @@ public class DataBase {
         return existe;
     }
 
-    public void enviarAlCarrito(int idUser, Producto prod) {
+    public boolean enviarAlCarrito(int idUser, Producto prod) {
+        boolean ok = false;
         try {
 
-            int cantidad = comprobarCarrito(idUser, prod.getIdProducto());
-            if (cantidad > 0) {
-                cantidad++;
+            boolean estaCarrito = comprobarCarrito(idUser, prod.getIdProducto());
+            if (!estaCarrito) {
 
-                String query = "UPDATE carrito SET cantidad = ? WHERE propietario_carrito = ? AND id_producto = ?";
-
-                PreparedStatement queryEnviarCarrito = conn.prepareStatement(query);
-                queryEnviarCarrito.setInt(1, cantidad);
-                queryEnviarCarrito.setInt(2, idUser);
-                queryEnviarCarrito.setInt(3, prod.getIdProducto());
-
-                queryEnviarCarrito.executeUpdate();
-
-            } else {
-
-                String query = "INSERT INTO carrito(propietario_carrito, id_producto, cantidad) VALUES (?, ?, ?)";
+                String query = "INSERT INTO carrito(propietario_carrito, id_producto) VALUES (?, ?, ?)";
 
                 PreparedStatement queryEnviarCarrito = conn.prepareStatement(query);
                 queryEnviarCarrito.setInt(1, idUser);
                 queryEnviarCarrito.setInt(2, prod.getIdProducto());
-                queryEnviarCarrito.setInt(3, 1);
 
                 queryEnviarCarrito.executeUpdate();
+                ok = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return ok;
     }
 
-    private int comprobarCarrito(int idUser, int idProd) {
-        int cantidad = 0;
+    private boolean comprobarCarrito(int idUser, int idProd) {
+        boolean estaCarrito = false;
 
-        String query = "SELECT cantidad FROM carrito WHERE propietario_carrito = ? AND id_producto = ?";
+        String query = "SELECT id_producto FROM carrito WHERE propietario_carrito = ? AND id_producto = ?";
 
         try {
-        PreparedStatement queryCantidadCarrito = conn.prepareStatement(query);
-        queryCantidadCarrito.setInt(1, idUser);
-        queryCantidadCarrito.setInt(2, idProd);
-        ResultSet resultCantidad = queryCantidadCarrito.executeQuery();
+        PreparedStatement queryEstaCarrito = conn.prepareStatement(query);
+        queryEstaCarrito.setInt(1, idUser);
+        queryEstaCarrito.setInt(2, idProd);
+        ResultSet resultEstaCarrito = queryEstaCarrito.executeQuery();
 
-        if (resultCantidad.next()) {
-            cantidad = resultCantidad.getInt("cantidad");
+        if (resultEstaCarrito.next()) {
+            estaCarrito = true;
         }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return cantidad;
+        return estaCarrito;
     }
 
     public ArrayList<Producto> verCarrito(int id) {
         ArrayList<Producto> carrito = new ArrayList<Producto>();
         if (conn != null) {
             try {
-                String query = "SELECT precio, nombre_prod FROM carrito c INNER JOIN producto p ON c.id_producto = p.id WHERE propietario_carrito = ?";
+                String query = "SELECT id_producto, precio, nombre_prod FROM carrito c INNER JOIN producto p ON c.id_producto = p.id WHERE propietario_carrito = ?";
 
                 PreparedStatement queryCarrito = conn.prepareStatement(query);
                 queryCarrito.setInt(1, id);
                 ResultSet resultCarrito = queryCarrito.executeQuery();
                 while (resultCarrito.next()) {
+                    int idProd = resultCarrito.getInt("id_producto");
                     Double precioProd = resultCarrito.getDouble("precio");
                     String nombreProducto = resultCarrito.getString("nombre_prod");
-                    carrito.add(new Producto(nombreProducto, precioProd));
+                    carrito.add(new Producto(idProd, nombreProducto, precioProd));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
@@ -430,6 +421,20 @@ public class DataBase {
             //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
         }
         return carrito;
+    }
+
+    public void eliminarUnProdCarrito(int idUser, int idProd) {
+        try {
+
+            String query = "DELETE FROM carrito WHERE propietario_carrito = ? AND id_producto = ?";
+
+            PreparedStatement queryBorrarProdCarrito = conn.prepareStatement(query);
+            queryBorrarProdCarrito.setInt(1, idUser);
+            queryBorrarProdCarrito.setInt(2, idProd);
+            queryBorrarProdCarrito.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public Direccion verDireccion(int idUser) {
@@ -555,10 +560,32 @@ public class DataBase {
         }
     }
 
+    public int obtenerIdPedido(int idUser) {
+        int idPedido = 0;
+        if (conn != null) {
+            try {
+                String query = "SELECT id FROM Pedido WHERE propietario_pedido = ? ORDER BY id DESC LIMIT 1";
+
+                PreparedStatement queryIdPedido = conn.prepareStatement(query);
+                queryIdPedido.setInt(1, idUser);
+                ResultSet resultSet = queryIdPedido.executeQuery();
+                if (resultSet.next()) {
+                    idPedido = resultSet.getInt("id");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return idPedido;
+    }
+
     public void borrarCarrito(int idUser) {
         try {
 
-            String query = "DELETE FROM Carrito WHERE id_usuario = ?";
+            String query = "DELETE FROM Carrito WHERE propietario_carrito = ?";
 
             PreparedStatement queryDeleteCarrito = conn.prepareStatement(query);
             queryDeleteCarrito = conn.prepareStatement(query);
@@ -573,14 +600,13 @@ public class DataBase {
     public void insertarDetallesPedido(PedidoDetalles pedidoDetalles) {
         try {
 
-            String query = "INSERT INTO Pedido_producto (id_pedido, id_producto, cantidad, precio) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Pedido_producto (id_pedido, id_producto, precio) VALUES (?, ?, ?)";
 
             PreparedStatement queryInsertPedidoDetalles = conn.prepareStatement(query);
             queryInsertPedidoDetalles = conn.prepareStatement(query);
             queryInsertPedidoDetalles.setInt(1, pedidoDetalles.getIdPedido());
             queryInsertPedidoDetalles.setInt(2, pedidoDetalles.getIdProducto());
-            queryInsertPedidoDetalles.setInt(3, pedidoDetalles.getCantidad());
-            queryInsertPedidoDetalles.setDouble(4, pedidoDetalles.getPrecio());
+            queryInsertPedidoDetalles.setDouble(3, pedidoDetalles.getPrecio());
             queryInsertPedidoDetalles.executeUpdate();
 
         } catch (SQLException e) {
@@ -588,14 +614,14 @@ public class DataBase {
         }
     }
 
-    public double totalCarrito(int nPedido) {
+    public double totalCarrito(int idUser) {
         double total = 0;
         if (conn != null) {
             try {
-                String query = "SELECT SUM(precio_prod) as total FROM carrito WHERE n_pedido = ?";
+                String query = "SELECT SUM(precio) as total FROM carrito c INNER JOIN producto p ON p.id = c.id_producto WHERE propietario_carrito = ?";
 
                 PreparedStatement queryCarrito = conn.prepareStatement(query);
-                queryCarrito.setInt(1, nPedido);
+                queryCarrito.setInt(1, idUser);
                 ResultSet resultCarrito = queryCarrito.executeQuery();
                 while (resultCarrito.next()) {
                     total = resultCarrito.getDouble("total");
@@ -604,7 +630,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return total;
     }

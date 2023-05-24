@@ -1,9 +1,11 @@
 package com.example.proyectodammanuelgongora.Compra;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +19,10 @@ import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Direccion;
 import com.example.proyectodammanuelgongora.Modelos.Pedido;
 import com.example.proyectodammanuelgongora.Modelos.PedidoDetalles;
+import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DireccionYPagoActivity extends AppCompatActivity {
@@ -28,7 +32,6 @@ public class DireccionYPagoActivity extends AppCompatActivity {
     LottieAnimationView compraHecha;
     Direccion direccion;
     int idUser;
-    double total;
 
 
     DataBase conexion = new DataBase();
@@ -43,7 +46,6 @@ public class DireccionYPagoActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idUser = intent.getIntExtra("idUsuarioLog", -1);
-        total = intent.getIntExtra("total", -1); // TODO: traer total
 
         Log.e("Usuario recibido", String.valueOf(idUser));
 
@@ -67,6 +69,7 @@ public class DireccionYPagoActivity extends AppCompatActivity {
         }
 
         btnPagar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 
@@ -83,15 +86,36 @@ public class DireccionYPagoActivity extends AppCompatActivity {
                                 etiCiudad.getText().toString(), etiPais.getText().toString(), etiCP.getText().toString()));
                     }
 
-
+                    // TODO: llamar metodo que devuelve id de direccion
 
                     // INSERT PEDIDO
 
-
+                    double total = conexion.totalCarrito(idUser);
+                    int idDireccion = conexion.obtenerIdDireccion(idUser);
+                    Pedido pedido = new Pedido(idUser, total, idDireccion, null);
+                    conexion.insertarPedido(pedido);
 
                     // DELETE CARRITO
 
+                    ArrayList<Producto> productosPedido = new ArrayList<>();
+                    productosPedido = conexion.verCarrito(idUser);
+
+                    conexion.borrarCarrito(idUser);
+
                     // INSERT PEDIDO
+
+                    int idPedido = conexion.obtenerIdPedido(idUser);
+
+                    for (Producto producto1: productosPedido) {
+                        Log.e("Producto",producto1.toString());
+                    }
+
+
+                    for (Producto producto: productosPedido) {
+                        PedidoDetalles pedidoDetalles = new PedidoDetalles(idPedido, producto.getIdProducto(), producto.getPrecio());
+                        conexion.insertarDetallesPedido(pedidoDetalles);
+                    }
+
 
                     compraHecha.setVisibility(View.VISIBLE);
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
 
@@ -19,9 +20,11 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
 
     private ArrayList<Producto> listaProductos;
     private View.OnClickListener listener;
+    private int idUser;
 
-    public AdaptadorCarrito(ArrayList<Producto> lista) {
+    public AdaptadorCarrito(ArrayList<Producto> lista, int idUser) {
         this.listaProductos = lista;
+        this.idUser = idUser;
     }
 
     @NonNull
@@ -63,9 +66,12 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
         TextView nombreProducto;
         TextView precioProducto;
         ImageButton eliminarProducto;
+        DataBase connexion = new DataBase();
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            connexion.conectar();
 
             // Relaciones componentes
             nombreProducto = itemView.findViewById(R.id.eti_nombre_prod_carito);
@@ -75,8 +81,8 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
             eliminarProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    connexion.eliminarUnProdCarrito(idUser, listaProductos.get(getAdapterPosition()).getIdProducto());
                     listaProductos.remove(getAdapterPosition());
-                    //TODO: Eliminar en bd
                     notifyDataSetChanged();
                 }
             });

@@ -18,7 +18,8 @@ public class Producto implements Serializable {
     }
 
     // Para carrito
-    public Producto(String nombreProd, double precio) {
+    public Producto(int idProducto, String nombreProd, double precio) {
+        this.idProducto = idProducto;
         this.nombreProd = nombreProd;
         this.precio = precio;
     }
