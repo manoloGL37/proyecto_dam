@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,10 +22,12 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
     private ArrayList<Producto> listaProductos;
     private View.OnClickListener listener;
     private int idUser;
+    private TextView etiTotal;
 
-    public AdaptadorCarrito(ArrayList<Producto> lista, int idUser) {
+    public AdaptadorCarrito(ArrayList<Producto> lista, int idUser, TextView etiTotal) {
         this.listaProductos = lista;
         this.idUser = idUser;
+        this.etiTotal = etiTotal;
     }
 
     @NonNull
@@ -66,12 +69,12 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
         TextView nombreProducto;
         TextView precioProducto;
         ImageButton eliminarProducto;
-        DataBase connexion = new DataBase();
+        DataBase conexion = new DataBase();
 
         public MiViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            connexion.conectar();
+            conexion.conectar();
 
             // Relaciones componentes
             nombreProducto = itemView.findViewById(R.id.eti_nombre_prod_carito);
@@ -81,7 +84,8 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
             eliminarProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    connexion.eliminarUnProdCarrito(idUser, listaProductos.get(getAdapterPosition()).getIdProducto());
+                    conexion.eliminarUnProdCarrito(idUser, listaProductos.get(getAdapterPosition()).getIdProducto());
+                    etiTotal.setText(conexion.totalCarrito(idUser) + " €");
                     listaProductos.remove(getAdapterPosition());
                     notifyDataSetChanged();
                 }

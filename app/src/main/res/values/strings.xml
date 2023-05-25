@@ -17,8 +17,9 @@
     <string name="btn_register">Registrarse</string>
 
     <!-- activity_product -->
-    <string name="color_producto">Color</string>
-    <string name="talla_producto">Talla</string>
+    <string name="nombre_producto">Nombre</string>
+    <string name="talla_producto">Talla única</string>
+    <string name="compra_unica">Se limita la compra de un tipo de producto por persona</string>
     <string name="btn_carrito">Añadir al carrito</string>
 
     <!-- activity_publicacion -->

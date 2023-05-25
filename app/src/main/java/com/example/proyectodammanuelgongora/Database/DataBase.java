@@ -362,7 +362,7 @@ public class DataBase {
             boolean estaCarrito = comprobarCarrito(idUser, prod.getIdProducto());
             if (!estaCarrito) {
 
-                String query = "INSERT INTO carrito(propietario_carrito, id_producto) VALUES (?, ?, ?)";
+                String query = "INSERT INTO carrito(propietario_carrito, id_producto) VALUES (?, ?)";
 
                 PreparedStatement queryEnviarCarrito = conn.prepareStatement(query);
                 queryEnviarCarrito.setInt(1, idUser);

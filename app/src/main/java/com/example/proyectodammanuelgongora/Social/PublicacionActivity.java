@@ -6,9 +6,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
@@ -37,6 +41,8 @@ public class PublicacionActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> galeriaLauncher;
     private Uri uri = null;
+
+    private final int REQUEST_CODE = 200;
 
 
     @Override
@@ -75,11 +81,14 @@ public class PublicacionActivity extends AppCompatActivity {
                 });
 
 
+
+
         // Boton para abrir la galeria
         imagenPublicacion.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                    abrirGaleria();
+                   verificarPermisos();
             }
         });
 
@@ -137,4 +146,16 @@ public class PublicacionActivity extends AppCompatActivity {
 
         return faltanDatos;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void verificarPermisos() {
+        int permiso = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if(permiso == PackageManager.PERMISSION_GRANTED) {
+            abrirGaleria();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+        }
+    }
+
 }

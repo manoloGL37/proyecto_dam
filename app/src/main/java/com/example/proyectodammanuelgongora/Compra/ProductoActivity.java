@@ -1,6 +1,7 @@
 package com.example.proyectodammanuelgongora.Compra;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Modelos.Producto;
 import com.example.proyectodammanuelgongora.R;
 import com.example.proyectodammanuelgongora.Utils.Utiles;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -31,11 +33,12 @@ public class ProductoActivity extends AppCompatActivity {
     Utiles utiles = new Utiles();
     int idProd;
     int idUser;
+    ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
+        setContentView(R.layout.activity_producto);
 
         nombreProd = findViewById(R.id.nombre_producto);
         precioProd = findViewById(R.id.precio_producto);
@@ -43,6 +46,7 @@ public class ProductoActivity extends AppCompatActivity {
         btnVolver = findViewById(R.id.btn_volver);
         btnCarrito = findViewById(R.id.btn_carrito);
         imagenProd = findViewById(R.id.imagen_producto);
+        layout = findViewById(R.id.layout_snackbar);
 
         Bundle bun = getIntent().getExtras();
 
@@ -73,7 +77,16 @@ public class ProductoActivity extends AppCompatActivity {
                 // Añadir producto al carrito del id logeado
                 boolean ok = conexion.enviarAlCarrito(idUser, p);
                 if (ok) {
-                    Toast.makeText(ProductoActivity.this, "Producto añadido al carrito", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(layout, "Producto añadido al carrito", Snackbar.LENGTH_LONG)
+                            .setAction("Carrito", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(ProductoActivity.this, CarritoActivity.class);
+                                    intent.putExtra("idUsuarioLog", idUser);
+                                    startActivity(intent);
+                                }
+                            });
+                    snackbar.show();
                 } else {
                     Toast.makeText(ProductoActivity.this, "El producto ya se encuentra en el carrito", Toast.LENGTH_SHORT).show();
                 }

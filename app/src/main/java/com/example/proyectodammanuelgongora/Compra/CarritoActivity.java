@@ -56,23 +56,12 @@ public class CarritoActivity extends AppCompatActivity {
         carrito = conexion.verCarrito(idUser);
 
         if (carrito.size() > 0) {
-            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito, idUser);
+            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito, idUser, total);
             recyclerViewCarrito.setAdapter(adapterCarrito);
 
-            total.setText(String.valueOf(conexion.totalCarrito(idUser) + " €"));
-            carritoVacio.setVisibility(View.INVISIBLE);
-            recyclerViewCarrito.setVisibility(View.VISIBLE);
-            divider.setVisibility(View.VISIBLE);
-            textTotal.setVisibility(View.VISIBLE);
-            total.setVisibility(View.VISIBLE);
+            verCarrito();
         } else {
-            carritoVacio.setVisibility(View.VISIBLE);
-            carritoVacio.setAnimation(R.raw.carrito_vacio);
-            carritoVacio.playAnimation();
-            recyclerViewCarrito.setVisibility(View.INVISIBLE);
-            divider.setVisibility(View.INVISIBLE);
-            textTotal.setVisibility(View.INVISIBLE);
-            total.setVisibility(View.INVISIBLE);
+            verCarritoVacio();
         }
 
         btnVolver.setOnClickListener(new View.OnClickListener() {
@@ -97,4 +86,24 @@ public class CarritoActivity extends AppCompatActivity {
 
 
     }
+
+    public void verCarrito() {
+        total.setText(conexion.totalCarrito(idUser) + " €");
+        carritoVacio.setVisibility(View.INVISIBLE);
+        recyclerViewCarrito.setVisibility(View.VISIBLE);
+        divider.setVisibility(View.VISIBLE);
+        textTotal.setVisibility(View.VISIBLE);
+        total.setVisibility(View.VISIBLE);
+    }
+
+    public void verCarritoVacio() {
+        carritoVacio.setVisibility(View.VISIBLE);
+        carritoVacio.setAnimation(R.raw.carrito_vacio);
+        carritoVacio.playAnimation();
+        recyclerViewCarrito.setVisibility(View.INVISIBLE);
+        divider.setVisibility(View.INVISIBLE);
+        textTotal.setVisibility(View.INVISIBLE);
+        total.setVisibility(View.INVISIBLE);
+    }
+
 }
