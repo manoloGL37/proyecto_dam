@@ -73,8 +73,6 @@ public class ProductoActivity extends AppCompatActivity {
         btnCarrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO:
-                // Añadir producto al carrito del id logeado
                 boolean ok = conexion.enviarAlCarrito(idUser, p);
                 if (ok) {
                     Snackbar snackbar = Snackbar.make(layout, "Producto añadido al carrito", Snackbar.LENGTH_LONG)

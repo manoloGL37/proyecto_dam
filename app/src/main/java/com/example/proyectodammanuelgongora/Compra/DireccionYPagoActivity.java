@@ -86,8 +86,6 @@ public class DireccionYPagoActivity extends AppCompatActivity {
                                 etiCiudad.getText().toString(), etiPais.getText().toString(), etiCP.getText().toString()));
                     }
 
-                    // TODO: llamar metodo que devuelve id de direccion
-
                     // INSERT PEDIDO
 
                     double total = conexion.totalCarrito(idUser);
@@ -102,7 +100,7 @@ public class DireccionYPagoActivity extends AppCompatActivity {
 
                     conexion.borrarCarrito(idUser);
 
-                    // INSERT PEDIDO
+                    // INSERT PEDIDO DETALLES
 
                     int idPedido = conexion.obtenerIdPedido(idUser);
 

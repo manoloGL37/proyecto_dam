@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -15,6 +16,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +45,13 @@ public class PublicacionActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> galeriaLauncher;
     private Uri uri = null;
 
-    private final int REQUEST_CODE = 200;
+    String[] required_permissions = new String[]{
+            Manifest.permission.READ_MEDIA_IMAGES
+    };
+
+    boolean acceso_galeria_permitido = false;
+
+    String TAG = "Permission";
 
 
     @Override
@@ -85,10 +94,14 @@ public class PublicacionActivity extends AppCompatActivity {
 
         // Boton para abrir la galeria
         imagenPublicacion.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                   verificarPermisos();
+                if (acceso_galeria_permitido) {
+                    abrirGaleria();
+                } else {
+                    pedirPermisos();
+                }
+
             }
         });
 
@@ -147,15 +160,28 @@ public class PublicacionActivity extends AppCompatActivity {
         return faltanDatos;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void verificarPermisos() {
-        int permiso = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if(permiso == PackageManager.PERMISSION_GRANTED) {
+    public void pedirPermisos() {
+        if (ContextCompat.checkSelfPermission(PublicacionActivity.this, required_permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, required_permissions[0] + " Granted");
+            acceso_galeria_permitido = true;
             abrirGaleria();
         } else {
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+            request_permission_launcher_storage_images.launch(required_permissions[0]);
         }
     }
+
+    private ActivityResultLauncher<String> request_permission_launcher_storage_images =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                    isGranted -> {
+                        if (isGranted) {
+                            Log.d(TAG, required_permissions[0] + " Granted");
+                            acceso_galeria_permitido = true;
+                        }  else {
+                            Log.d(TAG, required_permissions[0] + " Not Granted");
+                            acceso_galeria_permitido = false;
+                        }
+                        abrirGaleria();
+                    });
+
 
 }
