@@ -21,15 +21,22 @@ public class Usuario {
         this.email = email;
     }
 
-    public Usuario(int idUser, String nombre, String nombreUsuario, String contrsenya, String email, int rol, String telefono, String direccion) {
+    public Usuario(int idUser, String nombre, String nombreUsuario, String contrsenya, String email, int rol) {
         this.idUser = idUser;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.contrsenya = contrsenya;
         this.email = email;
         this.rol = rol;
-        this.telefono = telefono;
-        this.direccion = direccion;
+    }
+
+    // Actualizar
+    public Usuario(int idUser, String nombre, String nombreUsuario, String email, int rol) {
+        this.idUser = idUser;
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.rol = rol;
     }
 
     public int getIdUser() {
@@ -80,22 +87,6 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     @Override
     public String toString() {
         return "Usuario{" +
@@ -105,8 +96,6 @@ public class Usuario {
                 ", contrsenya='" + contrsenya + '\'' +
                 ", email='" + email + '\'' +
                 ", rol='" + rol + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", direccion='" + direccion + '\'' +
                 '}';
     }
 }

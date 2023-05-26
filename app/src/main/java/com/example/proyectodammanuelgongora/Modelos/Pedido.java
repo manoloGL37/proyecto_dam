@@ -5,15 +5,22 @@ import java.util.Date;
 public class Pedido {
 
     private int id;
-    private int idPedido;
+    private int idPropietario;
     private double totalPedido;
     private int idDireccion;
     private Date fechaPedido;
 
     public Pedido(int propietarioPedido, double totalPedido, int idDireccion, Date fechaPedido) {
-        this.idPedido = propietarioPedido;
+        this.idPropietario = propietarioPedido;
         this.totalPedido = totalPedido;
         this.idDireccion = idDireccion;
+        this.fechaPedido = fechaPedido;
+    }
+
+    // Ver pedidos
+    public Pedido(int id, double totalPedido, Date fechaPedido) {
+        this.id = id;
+        this.totalPedido = totalPedido;
         this.fechaPedido = fechaPedido;
     }
 
@@ -25,12 +32,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public int getIdPedido() {
-        return idPedido;
+    public int getIdPropietario() {
+        return idPropietario;
     }
 
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
+    public void setIdPropietario(int idPropietario) {
+        this.idPropietario = idPropietario;
     }
 
     public double getTotalPedido() {

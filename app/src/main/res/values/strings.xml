@@ -87,4 +87,18 @@
     <string name="eti_cp_pago">Código Postal</string>
     <string name="eti_tarjeta_pago">Número tarjeta de crédito</string>
     <string name="btn_pagar">PAGAR</string>
+
+    <!-- activity_mis_datos -->
+    <string name="titulo_mis_datos">Mis Datos</string>
+    <string name="btn_guardar_mis_datos">Guardar</string>
+    <string name="atencion_cliente">Llama al 671 456 836 o escribe un correo a stylepeak@soporte.es</string>
+    <string name="ayuda_cliente">¿Necesitas ayuda?</string>
+
+    <!-- activity_mis_pedidos -->
+    <string name="titulo_mis_pedidos">Mis Pedidos</string>
+
+    <!-- activity_mis_publicaciones -->
+    <string name="titulo_mis_publicaciones">Mis Publicaciones</string>
+    <string name="btn_eliminar_publicacion">Eliminar</string>
+
 </resources>

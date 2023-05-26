@@ -54,8 +54,6 @@ public class ProductoActivity extends AppCompatActivity {
         idProd = ids.get(0);
         idUser = ids.get(1);
 
-        Log.e("Array recibido", ids.toString());
-
         conexion.conectar();
         p = conexion.verProducto(idProd);
 

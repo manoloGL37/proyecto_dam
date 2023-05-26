@@ -117,6 +117,26 @@ public class DataBase {
         return usuarioLog;
     }
 
+    public boolean actualizarUsuario(Usuario usuario) {
+        boolean ok = false;
+        try {
+
+            String query = "UPDATE Usuario SET nombre = ?, nombre_usuario = ?, rol = ? WHERE id = ?";
+
+            PreparedStatement updateUser = conn.prepareStatement(query);
+            updateUser.setString(1, usuario.getNombre());
+            updateUser.setString(2, usuario.getNombreUsuario());
+            updateUser.setInt(3, usuario.getRol());
+            updateUser.setInt(4, usuario.getIdUser());
+            updateUser.executeUpdate();
+
+            ok = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ok;
+    }
+
     public Usuario obtenerUsuario(int id) {
         Usuario usuario = new Usuario();
 
@@ -130,6 +150,7 @@ public class DataBase {
             if (resultUsuario.next()) {
                 usuario.setIdUser(resultUsuario.getInt("id"));
                 usuario.setNombre(resultUsuario.getString("nombre"));
+                usuario.setEmail(resultUsuario.getString("email"));
                 usuario.setNombreUsuario(resultUsuario.getString("nombre_usuario"));
                 usuario.setRol(resultUsuario.getInt("rol"));
             }
@@ -270,6 +291,49 @@ public class DataBase {
             //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
         }
         return publicaciones;
+    }
+
+    // Ver publicaciones de un usuario
+    public ArrayList<Publicacion> verPublicaciones(int idUser) {
+        ArrayList<Publicacion> publicaciones = new ArrayList<Publicacion>();
+        if (conn != null) {
+            try {
+                String query = "SELECT p.*, us.nombre_usuario FROM publicacion p INNER JOIN usuario us ON us.id = p.id_propietario WHERE p.id_propietario = ? ORDER BY fecha_subida DESC";
+
+                PreparedStatement queryPublicaciones = conn.prepareStatement(query);
+                queryPublicaciones.setInt(1, idUser);
+                ResultSet resultPublicaciones = queryPublicaciones.executeQuery();
+                while (resultPublicaciones.next()) {
+                    int idPublicacion = resultPublicaciones.getInt("id_publicacion");
+                    byte[] imagen = resultPublicaciones.getBytes("imagen");
+                    String descripcion = resultPublicaciones.getString("descripcion");
+                    Date fechaSubida = resultPublicaciones.getDate("fecha_subida");
+                    int likes = resultPublicaciones.getInt("likes");
+                    int idPropietario = resultPublicaciones.getInt("id_propietario");
+                    String nombre_propietario = resultPublicaciones.getString("nombre_usuario");
+                    publicaciones.add(new Publicacion(idPublicacion, imagen, descripcion, fechaSubida, likes, idPropietario, nombre_propietario));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return publicaciones;
+    }
+
+    public void eliminarUnaPublicacion(int idUsuario, int idPublicacion) {
+        try {
+
+            String query = "DELETE FROM publicacion WHERE id_propietario = ? AND id_publicacion = ?";
+
+            PreparedStatement queryBorrarPublicacion = conn.prepareStatement(query);
+            queryBorrarPublicacion.setInt(1, idUsuario);
+            queryBorrarPublicacion.setInt(2, idPublicacion);
+            queryBorrarPublicacion.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     // Comprobar si el usuario ya ha dado mg anteriormente a la publicacion
@@ -549,7 +613,7 @@ public class DataBase {
 
             PreparedStatement queryInsertPedido = conn.prepareStatement(query);
             queryInsertPedido = conn.prepareStatement(query);
-            queryInsertPedido.setInt(1, pedido.getIdPedido());
+            queryInsertPedido.setInt(1, pedido.getId());
             queryInsertPedido.setDouble(2, pedido.getTotalPedido());
             queryInsertPedido.setInt(3, pedido.getIdDireccion());
             queryInsertPedido.setString(4, fechaPedido);
@@ -558,6 +622,30 @@ public class DataBase {
         } catch (SQLException e) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+
+    public ArrayList<Pedido> verPedidos(int idUser) {
+        ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+        if (conn != null) {
+            try {
+                String query = "SELECT id, total_pedido, fecha_pedido FROM pedido WHERE propietario_pedido = ? ORDER BY fecha_pedido DESC";
+
+                PreparedStatement queryPedido = conn.prepareStatement(query);
+                queryPedido.setInt(1, idUser);
+                ResultSet resultPedido = queryPedido.executeQuery();
+                while (resultPedido.next()) {
+                    int idPedido = resultPedido.getInt("id");
+                    double totalPedido = resultPedido.getDouble("total_pedido");
+                    Date fechaPedido = resultPedido.getDate("fecha_pedido");
+                    pedidos.add(new Pedido(idPedido, totalPedido, fechaPedido));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return pedidos;
     }
 
     public int obtenerIdPedido(int idUser) {

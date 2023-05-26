@@ -11,11 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.proyectodammanuelgongora.Database.DataBase;
 import com.example.proyectodammanuelgongora.Login.LoginActivity;
-import com.example.proyectodammanuelgongora.Login.RegistroActivity;
 import com.example.proyectodammanuelgongora.MiCuenta.MisDatosActivity;
 import com.example.proyectodammanuelgongora.MiCuenta.MisPedidosActivity;
 import com.example.proyectodammanuelgongora.MiCuenta.MisPublicacionesActivity;
@@ -45,15 +43,14 @@ public class DatosUsuarioFragment extends Fragment {
         int id = getArguments().getInt("idActivityInicio");
         usuarioLog = obtenerUsuarioPorId(id);
 
-        holaNombre = vista.findViewById(R.id.eti_nombre_mis_datos);
+        holaNombre = vista.findViewById(R.id.eti_nombre_panel_mis_datos);
         //noEres = vista.findViewById(R.id.eti_cerrar_sesion);
         btnDatos = vista.findViewById(R.id.cardview_mis_datos);
-        btnPedidos = vista.findViewById(R.id.cardview_mis_publicaciones);
+        btnPedidos = vista.findViewById(R.id.cardview_mis_pedidos);
         btnPublicaciones = vista.findViewById(R.id.cardview_mis_publicaciones);
         btnCerrarSesion = vista.findViewById(R.id.btn_user_cerrar_sesion);
 
         holaNombre.setText("¡ Hola " + usuarioLog.getNombre() + " !");
-        //noEres.setText("¿No eres " + usuarioLog.getNombre() + "?");
         
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
