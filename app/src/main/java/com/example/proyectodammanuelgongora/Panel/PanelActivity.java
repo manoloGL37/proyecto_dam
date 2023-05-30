@@ -58,6 +58,7 @@ public class PanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PanelActivity.this, VentasActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });
@@ -66,6 +67,7 @@ public class PanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PanelActivity.this, PublicacionesActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });
@@ -74,6 +76,7 @@ public class PanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PanelActivity.this, MasProductoActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });
@@ -83,6 +86,7 @@ public class PanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PanelActivity.this, ModProductoActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });
@@ -91,6 +95,7 @@ public class PanelActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PanelActivity.this, VentasActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
         });

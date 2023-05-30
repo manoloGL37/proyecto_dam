@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/btn_volver_mas_prdoucto"
+        android:id="@+id/btn_volver_mas_prodoucto"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="16dp"
@@ -30,7 +30,7 @@
         android:textSize="38sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toEndOf="@+id/btn_volver_mas_prdoucto"
+        app:layout_constraintStart_toEndOf="@+id/btn_volver_mas_prodoucto"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView

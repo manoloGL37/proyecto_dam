@@ -43,7 +43,7 @@ public class ModProductoActivity extends AppCompatActivity {
         listaProductos = new ArrayList<>();
         listaProductos = conexion.verProductos();
 
-        AdaptadorProducto adapter = new AdaptadorProducto(this, listaProductos);
+        AdaptadorProducto adapter = new AdaptadorProducto(this, listaProductos, idUser);
         recyclerViewProductos.setAdapter(adapter);
 
         btnAtras.setOnClickListener(new View.OnClickListener() {

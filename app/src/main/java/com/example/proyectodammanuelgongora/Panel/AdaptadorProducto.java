@@ -1,6 +1,7 @@
 package com.example.proyectodammanuelgongora.Panel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,12 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Mi
     private ArrayList<Producto> listaProductos;
     private View.OnClickListener listener;
     private Context context;
+    private int idUser;
 
-    public AdaptadorProducto(Context context, ArrayList<Producto> lista) {
+    public AdaptadorProducto(Context context, ArrayList<Producto> lista, int idUser) {
         this.listaProductos = lista;
         this.context = context;
+        this.idUser = idUser;
     }
 
     @NonNull
@@ -72,9 +75,13 @@ public class AdaptadorProducto extends RecyclerView.Adapter<AdaptadorProducto.Mi
             btnEditar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Vamos a otra activity", Toast.LENGTH_SHORT).show();
-                    Producto pEnviar = listaProductos.get(getAdapterPosition());
-                    Log.e("Producto a enviar", pEnviar.toString());
+                    Intent intent = new Intent(context, EditarEliminarActivity.class);
+                    int id = listaProductos.get(getAdapterPosition()).getIdProducto();
+                    ArrayList<Integer> ids = new ArrayList<>();
+                    ids.add(id);
+                    ids.add(idUser);
+                    intent.putIntegerArrayListExtra("ids", ids);
+                    context.startActivity(intent);
                 }
             });
         }

@@ -32,10 +32,11 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
     EditText etiNombre, etiDescripcion, etiStock, etiPrecio;
     Spinner etiCategoria;
     Button btnGuardar;
-    ImageButton imagenProd;
+    ImageButton imagenProd, btnAtras;
     DataBase conexion = new DataBase();
     Utiles utils = new Utiles();
     String categoria;
+    int idUser;
 
     private ActivityResultLauncher<Intent> galeriaLauncher;
     private Uri uri = null;
@@ -46,6 +47,9 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mas_producto);
 
+        Intent intent = getIntent();
+        idUser = intent.getIntExtra("idUsuarioLog", -1);
+
         conexion.conectar();
 
         etiNombre = findViewById(R.id.eti_nombre_mas_prod);
@@ -55,6 +59,7 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
         etiPrecio = findViewById(R.id.eti_precio_mas_prod);
         imagenProd = findViewById(R.id.img_prod_mas);
         btnGuardar = findViewById(R.id.btn_mas_prod);
+        btnAtras = findViewById(R.id.btn_volver_mas_prodoucto);
 
         // Llenamos el spinner
         ArrayAdapter<CharSequence> adaptadorSpinner = ArrayAdapter.createFromResource(this, R.array.string_array_categorias, android.R.layout.simple_spinner_item);
@@ -108,6 +113,15 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PanelActivity.class);
+                intent.putExtra("idUsuarioLog", idUser);
+                startActivity(intent);
             }
         });
 
