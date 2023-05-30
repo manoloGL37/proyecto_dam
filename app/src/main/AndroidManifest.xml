@@ -42,13 +42,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Panel.EliminarProductoActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Panel.MasProductoActivity"
             android:exported="false">
             <meta-data

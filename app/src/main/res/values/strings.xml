@@ -62,8 +62,7 @@
     <string name="btn_panel_ventas">VENTAS</string>
     <string name="btn_panel_publicaciones">PUBLICACIONES</string>
     <string name="btn_panel_mas_producto">AÑADIR \n PRODUCTO</string>
-    <string name="btn_panel_eliminar_producto">ELIMINAR \n PRODUCTO</string>
-    <string name="btn_panel_mod_producto">MODIFICAR \n PRODUCTO</string>
+    <string name="btn_panel_mod_producto">EDITAR \n PRODUCTO</string>
     <string name="btn_panel_usuarios">USUARIOS</string>
     <string name="btn_panel_cerrar_sesion">Cerrar Sesion</string>
 
@@ -100,5 +99,8 @@
     <!-- activity_mis_publicaciones -->
     <string name="titulo_mis_publicaciones">Mis Publicaciones</string>
     <string name="btn_eliminar_publicacion">Eliminar</string>
+
+    <!-- activity_ventas -->
+    <string name="titulo_ventas">Ventas</string>
 
 </resources>

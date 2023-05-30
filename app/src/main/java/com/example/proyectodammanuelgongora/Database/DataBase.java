@@ -624,6 +624,29 @@ public class DataBase {
         }
     }
 
+    public ArrayList<Pedido> verPedidos() {
+        ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+        if (conn != null) {
+            try {
+                String query = "SELECT id, total_pedido, fecha_pedido FROM pedido ORDER BY fecha_pedido DESC";
+
+                PreparedStatement queryPedido = conn.prepareStatement(query);
+                ResultSet resultPedido = queryPedido.executeQuery();
+                while (resultPedido.next()) {
+                    int idPedido = resultPedido.getInt("id");
+                    double totalPedido = resultPedido.getDouble("total_pedido");
+                    Date fechaPedido = resultPedido.getDate("fecha_pedido");
+                    pedidos.add(new Pedido(idPedido, totalPedido, fechaPedido));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return pedidos;
+    }
+
     public ArrayList<Pedido> verPedidos(int idUser) {
         ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
         if (conn != null) {

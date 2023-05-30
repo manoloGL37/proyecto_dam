@@ -17,7 +17,7 @@ import com.example.proyectodammanuelgongora.R;
 
 public class PanelActivity extends AppCompatActivity {
 
-    ImageButton btnVentas, btnPublicaciones, btnUsuarios, btnMasProducto, btnEliminarProducto, btnModProducto;
+    ImageButton btnVentas, btnPublicaciones, btnUsuarios, btnMasProducto, btnModProducto;
     Button btnCerrarSesion;
     CardView opUsuarios;
     DataBase conexion = new DataBase();
@@ -36,7 +36,6 @@ public class PanelActivity extends AppCompatActivity {
         btnPublicaciones = findViewById(R.id.btn_panel_publicaciones);
         btnUsuarios = findViewById(R.id.btn_panel_usuarios);
         btnMasProducto = findViewById(R.id.btn_panel_mas_producto);
-        btnEliminarProducto = findViewById(R.id.btn_panel_eliminar_producto);
         btnModProducto = findViewById(R.id.btn_panel_mod_producto);
         btnCerrarSesion = findViewById(R.id.btn_panel_cerrar_sesion);
         opUsuarios = findViewById(R.id.card_view_usuarios);
@@ -87,13 +86,6 @@ public class PanelActivity extends AppCompatActivity {
             }
         });
 
-        btnEliminarProducto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PanelActivity.this, EliminarProductoActivity.class);
-                startActivity(intent);
-            }
-        });
 
         btnModProducto.setOnClickListener(new View.OnClickListener() {
             @Override
