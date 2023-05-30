@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 
 import com.example.proyectodammanuelgongora.Aplicacion.InicioActivity;
 import com.example.proyectodammanuelgongora.Database.DataBase;
-import com.example.proyectodammanuelgongora.MiCuenta.AdaptadorMisPedidos;
+import com.example.proyectodammanuelgongora.MiCuenta.AdaptadorPedidos;
 import com.example.proyectodammanuelgongora.Modelos.Pedido;
 import com.example.proyectodammanuelgongora.R;
 
@@ -36,20 +36,20 @@ public class VentasActivity extends AppCompatActivity {
         idUser = intent.getIntExtra("idUsuarioLog", -1);
 
         recyclerViewVentas = findViewById(R.id.recyclerview_ventas);
-        btnAtras = findViewById(R.id.btn_atras_mis_pedidos);
+        btnAtras = findViewById(R.id.btn_atras_ventas);
 
         recyclerViewVentas.setLayoutManager(new GridLayoutManager(this,1));
 
         listaVentas = new ArrayList<>();
         listaVentas = conexion.verPedidos();
 
-        AdaptadorMisPedidos adapter = new AdaptadorMisPedidos(listaVentas);
+        AdaptadorPedidos adapter = new AdaptadorPedidos(listaVentas);
         recyclerViewVentas.setAdapter(adapter);
 
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), InicioActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PanelActivity.class);
                 intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }

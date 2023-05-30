@@ -42,7 +42,7 @@ public class MisPedidosActivity extends AppCompatActivity {
         listaPedidos = new ArrayList<>();
         listaPedidos = conexion.verPedidos(idUser);
 
-        AdaptadorMisPedidos adapter = new AdaptadorMisPedidos(listaPedidos);
+        AdaptadorPedidos adapter = new AdaptadorPedidos(listaPedidos);
         recyclerViewPedidos.setAdapter(adapter);
 
         btnAtras.setOnClickListener(new View.OnClickListener() {

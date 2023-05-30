@@ -41,18 +41,10 @@ public class PanelActivity extends AppCompatActivity {
         opUsuarios = findViewById(R.id.card_view_usuarios);
 
 
-
         Intent intent = getIntent();
         idUser = intent.getIntExtra("idUsuarioLog", -1);
 
         usuario = obtenerUsuarioPorId(idUser);
-
-        Log.e("Usuario recogido", usuario.toString());
-
-        boolean esAdmin = esAdmin(usuario);
-
-        Log.e("Es admin?", String.valueOf(esAdmin));
-
 
         if (esAdmin(usuario)) {
             opUsuarios.setVisibility(View.VISIBLE);

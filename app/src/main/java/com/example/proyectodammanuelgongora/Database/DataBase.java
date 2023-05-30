@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class DataBase {
 
     String bd = "stylepeak";
-    String url = "jdbc:mysql://192.168.0.194:3306/";
+    String url = "jdbc:mysql://192.168.0.193:3306/";
     String user = "root";
     String password = "";
     Connection conn;
@@ -185,7 +185,34 @@ public class DataBase {
         return false;
     }
 
-    // Ver todos los productos
+    public ArrayList<Producto> verProductos() {
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        if (conn != null) {
+            try {
+                String query = "SELECT * FROM producto";
+
+                PreparedStatement queryProductos = conn.prepareStatement(query);
+                ResultSet resultProductos = queryProductos.executeQuery();
+                while (resultProductos.next()) {
+                    int id_producto = resultProductos.getInt("id");
+                    String nombre_prod = resultProductos.getString("nombre_prod");
+                    String cat = resultProductos.getString("categoria");
+                    byte[] imagen = resultProductos.getBytes("imagen");
+                    String descripcion = resultProductos.getString("descripcion");
+                    int stock = resultProductos.getInt("stock");
+                    double precio = resultProductos.getDouble("precio");
+                    productos.add(new Producto(id_producto, nombre_prod, cat, imagen, descripcion, stock, precio));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+        }
+        return productos;
+    }
+
+    // Ver todos los productos por categoria
     public ArrayList<Producto> verProductos(String categoria) {
         ArrayList<Producto> productos = new ArrayList<Producto>();
         if (conn != null) {

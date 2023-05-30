@@ -3,7 +3,6 @@ package com.example.proyectodammanuelgongora.MiCuenta;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +13,12 @@ import com.example.proyectodammanuelgongora.R;
 
 import java.util.ArrayList;
 
-public class AdaptadorMisPedidos extends RecyclerView.Adapter<AdaptadorMisPedidos.MiViewHolder> implements View.OnClickListener{
+public class AdaptadorPedidos extends RecyclerView.Adapter<AdaptadorPedidos.MiViewHolder> implements View.OnClickListener{
 
     private ArrayList<Pedido> listaPedidos;
     private View.OnClickListener listener;
 
-    public AdaptadorMisPedidos(ArrayList<Pedido> lista) {
+    public AdaptadorPedidos(ArrayList<Pedido> lista) {
         this.listaPedidos = lista;
     }
 

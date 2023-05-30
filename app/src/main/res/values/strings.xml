@@ -103,4 +103,13 @@
     <!-- activity_ventas -->
     <string name="titulo_ventas">Ventas</string>
 
+    <!-- activity_publiaciones -->
+    <string name="titulo_publicaciones">Publicaciones</string>
+
+    <!-- activity_mod_productos -->
+    <string name="titulo_productos">Productos</string>
+
+    <!-- activity_editar_eliminar_producto -->
+    <string name="titlo_editar_producto">Editar Producto</string>
+
 </resources>
