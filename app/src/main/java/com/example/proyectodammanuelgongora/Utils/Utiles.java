@@ -83,5 +83,15 @@ public class Utiles {
         return null;
     }
 
+    public static ImageButton blobAImageButton(Context context, byte[] bytes) {
+        if (bytes != null && bytes.length > 0) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ImageButton imageButton = new ImageButton(context);
+            imageButton.setImageBitmap(bitmap);
+            return imageButton;
+        }
+        return null;
+    }
+
 
 }

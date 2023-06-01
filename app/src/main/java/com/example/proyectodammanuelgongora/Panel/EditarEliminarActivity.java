@@ -119,14 +119,29 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
                 double precio = Double.parseDouble(etiPrecio.getText().toString());
                 byte[] imagen = utiles.imageButtonABlob(imagenProd);
 
-                boolean ok = conexion.crearProducto(new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                boolean ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
 
                 if (ok) {
-                    Toast.makeText(EditarEliminarActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                    intent.putExtra("idUsuarioLog", idUser);
                     startActivity(intent);
                 }
 
+            }
+        });
+
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean ok = conexion.eliminarProducto(idProd);
+
+                if (ok) {
+                    Toast.makeText(EditarEliminarActivity.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                    intent.putExtra("idUsuarioLog", idUser);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -148,8 +163,8 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         etiDescripcion.setText(p.getDescripcion());
         etiStock.setText(String.valueOf(p.getStock()));
         etiPrecio.setText(String.valueOf(p.getPrecio()));
-        ImageView imageView = utiles.blobAImageView(this, p.getImagen());
-        imagenProd.setImageDrawable(imageView.getDrawable());
+        ImageButton image = utiles.blobAImageButton(this, p.getImagen());
+        imagenProd.setImageDrawable(image.getDrawable());
         categoria = p.getCategoria();
     }
 

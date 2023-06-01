@@ -110,6 +110,7 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
                 if (ok) {
                     Toast.makeText(MasProductoActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MasProductoActivity.this, PanelActivity.class);
+                    intent.putExtra("idUsuarioLog", idUser);
                     startActivity(intent);
                 }
 

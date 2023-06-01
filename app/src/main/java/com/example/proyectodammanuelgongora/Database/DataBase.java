@@ -163,6 +163,46 @@ public class DataBase {
         return usuario;
     }
 
+    public ArrayList<Usuario> verUsuarios() {
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+
+        if (conn != null) {
+            try {
+                String query = "SELECT u.*, r.nombre as rol_name FROM usuario u INNER JOIN roles r ON u.rol = r.id";
+
+                PreparedStatement queryUsuarios = conn.prepareStatement(query);
+                ResultSet resultUsuarios = queryUsuarios.executeQuery();
+                while (resultUsuarios.next()) {
+                    Usuario usuario = new Usuario();
+                    usuario.setIdUser(resultUsuarios.getInt("id"));
+                    usuario.setNombre(resultUsuarios.getString("nombre"));
+                    usuario.setEmail(resultUsuarios.getString("email"));
+                    usuario.setNombreUsuario(resultUsuarios.getString("nombre_usuario"));
+                    usuario.setRolName(resultUsuarios.getString("rol_name"));
+                    listaUsuarios.add(usuario);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+        return listaUsuarios;
+    }
+
+    public void eliminarUsuario(int idUser) {
+        try {
+            String query = "DELETE FROM Usuario WHERE id = ?";
+
+            PreparedStatement queryEliminarUsuario = conn.prepareStatement(query);
+            queryEliminarUsuario.setInt(1, idUser);
+            queryEliminarUsuario.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     // Crear un nuevo producto
     public boolean crearProducto(Producto prod) {
         try {
@@ -211,6 +251,46 @@ public class DataBase {
         }
         return productos;
     }
+
+    public boolean actualizarProducto(int idProd, Producto prod) {
+        try {
+
+            String query = "UPDATE Producto SET nombre_prod = ?, categoria = ?, imagen = ?, descripcion = ?, stock = ?, precio = ? WHERE id = ?";
+
+            PreparedStatement queryUpdateProducto = conn.prepareStatement(query);
+            queryUpdateProducto.setString(1, prod.getNombreProd());
+            queryUpdateProducto.setString(2, prod.getCategoria());
+            queryUpdateProducto.setBytes(3, prod.getImagen());
+            queryUpdateProducto.setString(4, prod.getDescripcion());
+            queryUpdateProducto.setInt(5, prod.getStock());
+            queryUpdateProducto.setDouble(6, prod.getPrecio());
+            queryUpdateProducto.setInt(7, idProd);
+            queryUpdateProducto.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return false;
+    }
+
+    public boolean eliminarProducto(int idProd) {
+        try {
+            String query = "DELETE FROM Producto WHERE id = ?";
+
+            PreparedStatement queryEliminarProducto = conn.prepareStatement(query);
+            queryEliminarProducto.setInt(1, idProd);
+            queryEliminarProducto.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        }
+    }
+
 
     // Ver todos los productos por categoria
     public ArrayList<Producto> verProductos(String categoria) {

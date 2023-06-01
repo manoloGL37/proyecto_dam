@@ -112,4 +112,7 @@
     <!-- activity_editar_eliminar_producto -->
     <string name="titlo_editar_producto">Editar Producto</string>
 
+    <!-- activity_usuarios -->
+    <string name="titlo_usuarios">Usuarios</string>
+
 </resources>

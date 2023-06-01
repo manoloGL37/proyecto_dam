@@ -8,8 +8,7 @@ public class Usuario {
     private String contrsenya;
     private String email;
     private int rol;
-    private String telefono;
-    private String direccion;
+    private String rolName;
 
     public Usuario() {
     }
@@ -19,6 +18,14 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
         this.contrsenya = contrsenya;
         this.email = email;
+    }
+
+    public Usuario(String nombre, String nombreUsuario, String contrsenya, String email, String rolName) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.contrsenya = contrsenya;
+        this.email = email;
+        this.rolName = rolName;
     }
 
     public Usuario(int idUser, String nombre, String nombreUsuario, String contrsenya, String email, int rol) {
@@ -87,6 +94,14 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public String getRolName() {
+        return rolName;
+    }
+
+    public void setRolName(String rolName) {
+        this.rolName = rolName;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -95,7 +110,8 @@ public class Usuario {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", contrsenya='" + contrsenya + '\'' +
                 ", email='" + email + '\'' +
-                ", rol='" + rol + '\'' +
+                ", rol=" + rol +
+                ", rolName='" + rolName + '\'' +
                 '}';
     }
 }

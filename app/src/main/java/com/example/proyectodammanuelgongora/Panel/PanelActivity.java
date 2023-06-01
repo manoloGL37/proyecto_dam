@@ -94,7 +94,7 @@ public class PanelActivity extends AppCompatActivity {
         btnUsuarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PanelActivity.this, VentasActivity.class);
+                Intent intent = new Intent(PanelActivity.this, UsuariosActivity.class);
                 intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
