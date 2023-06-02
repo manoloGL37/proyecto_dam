@@ -7,6 +7,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -113,19 +115,21 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
             @Override
             public void onClick(View v) {
 
-                String nombre = etiNombre.getText().toString();
-                String descipcion = etiDescripcion.getText().toString();
-                int stock = Integer.parseInt(etiStock.getText().toString());
-                double precio = Double.parseDouble(etiPrecio.getText().toString());
-                byte[] imagen = utiles.imageButtonABlob(imagenProd);
+                if (!faltanDatos()) {
+                    String nombre = etiNombre.getText().toString();
+                    String descipcion = etiDescripcion.getText().toString();
+                    int stock = Integer.parseInt(etiStock.getText().toString());
+                    double precio = Double.parseDouble(etiPrecio.getText().toString());
+                    byte[] imagen = utiles.imageButtonABlob(imagenProd);
 
-                boolean ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                    boolean ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
 
-                if (ok) {
-                    Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
-                    intent.putExtra("idUsuarioLog", idUser);
-                    startActivity(intent);
+                    if (ok) {
+                        Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                        intent.putExtra("idUsuarioLog", idUser);
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -134,14 +138,33 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean ok = conexion.eliminarProducto(idProd);
 
-                if (ok) {
-                    Toast.makeText(EditarEliminarActivity.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
-                    intent.putExtra("idUsuarioLog", idUser);
-                    startActivity(intent);
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditarEliminarActivity.this);
+                builder.setTitle("Confirmar eliminación");
+                builder.setMessage("¿Estás seguro de que deseas eliminar el producto?");
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean ok = conexion.eliminarProducto(idProd);
+
+                        if (ok) {
+                            Toast.makeText(EditarEliminarActivity.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                            intent.putExtra("idUsuarioLog", idUser);
+                            startActivity(intent);
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
@@ -166,6 +189,30 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         ImageButton image = utiles.blobAImageButton(this, p.getImagen());
         imagenProd.setImageDrawable(image.getDrawable());
         categoria = p.getCategoria();
+    }
+
+    private boolean faltanDatos() {
+        String nombre = etiNombre.getText().toString().trim();
+        String descripcion = etiDescripcion.getText().toString().trim();
+        String stock = etiStock.getText().toString().trim();
+        String precio = etiPrecio.getText().toString().trim();
+
+        if (nombre.isEmpty() || descripcion.isEmpty() || stock.isEmpty() || precio.isEmpty()) {
+            Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (etiCategoria.getSelectedItem() == null) {
+            Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if(!imagenIntroducida) {
+            Toast.makeText(this, "Debe introducir una imagen", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return false;
     }
 
     // Metodo que llama al launcher de la galeria

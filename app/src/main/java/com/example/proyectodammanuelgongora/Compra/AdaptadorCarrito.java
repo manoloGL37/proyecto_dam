@@ -1,5 +1,8 @@
 package com.example.proyectodammanuelgongora.Compra;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +26,10 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
     private View.OnClickListener listener;
     private int idUser;
     private TextView etiTotal;
+    private Context context;
 
-    public AdaptadorCarrito(ArrayList<Producto> lista, int idUser, TextView etiTotal) {
+    public AdaptadorCarrito(Context context,ArrayList<Producto> lista, int idUser, TextView etiTotal) {
+        this.context = context;
         this.listaProductos = lista;
         this.idUser = idUser;
         this.etiTotal = etiTotal;
@@ -84,10 +89,28 @@ public class AdaptadorCarrito extends RecyclerView.Adapter<AdaptadorCarrito.MiVi
             eliminarProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    conexion.eliminarUnProdCarrito(idUser, listaProductos.get(getAdapterPosition()).getIdProducto());
-                    etiTotal.setText(conexion.totalCarrito(idUser) + " €");
-                    listaProductos.remove(getAdapterPosition());
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Confirmar eliminación");
+                    builder.setMessage("¿Estás seguro de que deseas eliminar el elemento del carrito?");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            conexion.eliminarUnProdCarrito(idUser, listaProductos.get(getAdapterPosition()).getIdProducto());
+                            etiTotal.setText(conexion.totalCarrito(idUser) + " €");
+                            listaProductos.remove(getAdapterPosition());
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
             });
 

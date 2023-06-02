@@ -1,5 +1,8 @@
 package com.example.proyectodammanuelgongora.Panel;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +23,10 @@ public class AdaptadorUsuario extends RecyclerView.Adapter<AdaptadorUsuario.MiVi
 
     private ArrayList<Usuario> listaUsuarios;
     private View.OnClickListener listener;
+    private Context context;
 
-    public AdaptadorUsuario(ArrayList<Usuario> lista) {
+    public AdaptadorUsuario(Context context, ArrayList<Usuario> lista) {
+        this.context = context;
         this.listaUsuarios = lista;
     }
 
@@ -74,11 +79,30 @@ public class AdaptadorUsuario extends RecyclerView.Adapter<AdaptadorUsuario.MiVi
             btnEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    conexion.eliminarUsuario(listaUsuarios.get(getAdapterPosition()).getIdUser());
-                    listaUsuarios.remove(listaUsuarios.get(getAdapterPosition()));
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Confirmar eliminación");
+                    builder.setMessage("¿Estás seguro de que deseas eliminar este usuario?");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Eliminar el usuario
+                            conexion.eliminarUsuario(listaUsuarios.get(getAdapterPosition()).getIdUser());
+                            listaUsuarios.remove(getAdapterPosition());
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             });
+
 
         }
 

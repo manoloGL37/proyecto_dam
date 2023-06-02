@@ -43,7 +43,7 @@ public class UsuariosActivity extends AppCompatActivity {
         listaUsuarios = new ArrayList<>();
         listaUsuarios = conexion.verUsuarios();
 
-        AdaptadorUsuario adapter = new AdaptadorUsuario(listaUsuarios);
+        AdaptadorUsuario adapter = new AdaptadorUsuario(UsuariosActivity.this, listaUsuarios);
         recyclerViewUsuarios.setAdapter(adapter);
 
         btnAtras.setOnClickListener(new View.OnClickListener() {

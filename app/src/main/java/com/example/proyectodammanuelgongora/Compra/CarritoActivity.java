@@ -56,7 +56,7 @@ public class CarritoActivity extends AppCompatActivity {
         carrito = conexion.verCarrito(idUser);
 
         if (carrito.size() > 0) {
-            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(carrito, idUser, total);
+            AdaptadorCarrito adapterCarrito = new AdaptadorCarrito(CarritoActivity.this ,carrito, idUser, total);
             recyclerViewCarrito.setAdapter(adapterCarrito);
 
             verCarrito();

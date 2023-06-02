@@ -99,19 +99,21 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View v) {
 
-                String nombre = etiNombre.getText().toString();
-                String descipcion = etiDescripcion.getText().toString();
-                int stock = Integer.parseInt(etiStock.getText().toString());
-                double precio = Double.parseDouble(etiPrecio.getText().toString());
-                byte[] imagen = utils.imageButtonABlob(imagenProd);
+                if (!faltanDatos()) {
+                    String nombre = etiNombre.getText().toString();
+                    String descipcion = etiDescripcion.getText().toString();
+                    int stock = Integer.parseInt(etiStock.getText().toString());
+                    double precio = Double.parseDouble(etiPrecio.getText().toString());
+                    byte[] imagen = utils.imageButtonABlob(imagenProd);
 
-                boolean ok = conexion.crearProducto(new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                    boolean ok = conexion.crearProducto(new Producto(nombre, categoria, imagen, descipcion, stock, precio));
 
-                if (ok) {
-                    Toast.makeText(MasProductoActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MasProductoActivity.this, PanelActivity.class);
-                    intent.putExtra("idUsuarioLog", idUser);
-                    startActivity(intent);
+                    if (ok) {
+                        Toast.makeText(MasProductoActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MasProductoActivity.this, PanelActivity.class);
+                        intent.putExtra("idUsuarioLog", idUser);
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -137,6 +139,31 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    private boolean faltanDatos() {
+        String nombre = etiNombre.getText().toString().trim();
+        String descripcion = etiDescripcion.getText().toString().trim();
+        String stock = etiStock.getText().toString().trim();
+        String precio = etiPrecio.getText().toString().trim();
+
+        if (nombre.isEmpty() || descripcion.isEmpty() || stock.isEmpty() || precio.isEmpty()) {
+            Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (etiCategoria.getSelectedItem() == null) {
+            Toast.makeText(this, "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if(!imagenIntroducida) {
+            Toast.makeText(this, "Debe introducir una imagen", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return false;
+    }
+
 
 
     // Metodo que llama al launcher de la galeria
