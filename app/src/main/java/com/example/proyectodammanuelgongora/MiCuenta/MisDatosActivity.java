@@ -63,6 +63,7 @@ public class MisDatosActivity extends AppCompatActivity {
                     if (ok) {
                         Toast.makeText(MisDatosActivity.this, "Registro actualizado con éxito", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), InicioActivity.class);
+                        i.putExtra("idUsuarioLog", idUser);
                         startActivity(i);
                     }
                 }
