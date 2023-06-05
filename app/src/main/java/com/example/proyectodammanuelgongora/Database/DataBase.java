@@ -701,15 +701,6 @@ public class DataBase {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void realizarCompra(Pedido pedido, int idUser, PedidoDetalles pedidoDetalles) {
-        insertarPedido(pedido);
-
-        borrarCarrito(idUser);
-
-        insertarDetallesPedido(pedidoDetalles);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void insertarPedido(Pedido pedido) {
         try {
 
@@ -719,8 +710,7 @@ public class DataBase {
             String query = "INSERT INTO Pedido (propietario_pedido, total_pedido, id_direccion, fecha_pedido) VALUES (?, ?, ?, ?)";
 
             PreparedStatement queryInsertPedido = conn.prepareStatement(query);
-            queryInsertPedido = conn.prepareStatement(query);
-            queryInsertPedido.setInt(1, pedido.getId());
+            queryInsertPedido.setInt(1, pedido.getIdPropietario());
             queryInsertPedido.setDouble(2, pedido.getTotalPedido());
             queryInsertPedido.setInt(3, pedido.getIdDireccion());
             queryInsertPedido.setString(4, fechaPedido);
@@ -817,6 +807,12 @@ public class DataBase {
 
     public void insertarDetallesPedido(PedidoDetalles pedidoDetalles) {
         try {
+
+            String update = "UPDATE Producto SET stock = stock - 1 WHERE id = ?";
+
+            PreparedStatement queryUpdateStock = conn.prepareStatement(update);
+            queryUpdateStock.setInt(1, pedidoDetalles.getIdProducto());
+            queryUpdateStock.executeUpdate();
 
             String query = "INSERT INTO Pedido_producto (id_pedido, id_producto, precio) VALUES (?, ?, ?)";
 

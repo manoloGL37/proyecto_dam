@@ -61,9 +61,6 @@ public class DireccionYPagoActivity extends AppCompatActivity {
 
         direccion = conexion.verDireccion(idUser);
 
-        Log.e("direccion", direccion.toString());
-
-
         if (direccion.isTieneDireccion()) {
             rellenarCampos();
         }
@@ -103,10 +100,6 @@ public class DireccionYPagoActivity extends AppCompatActivity {
                     // INSERT PEDIDO DETALLES
 
                     int idPedido = conexion.obtenerIdPedido(idUser);
-
-                    for (Producto producto1: productosPedido) {
-                        Log.e("Producto",producto1.toString());
-                    }
 
 
                     for (Producto producto: productosPedido) {
