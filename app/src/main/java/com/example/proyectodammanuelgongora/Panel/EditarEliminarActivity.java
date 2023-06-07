@@ -84,6 +84,13 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         // Applicamos el adaptador al Spinner
         etiCategoria.setAdapter(adaptadorSpinner);
 
+        categoria = p.getCategoria();
+        if (categoria.equals("Camiseta")) {
+            etiCategoria.setSelection(0);
+        } else if (categoria.equals("Sudadera")) {
+            etiCategoria.setSelection(1);
+        }
+
         // Launcher para abrir la galeria y recoger la imagen seleccionada
         galeriaLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -126,7 +133,7 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
 
                     if (ok) {
                         Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                        Intent intent = new Intent(EditarEliminarActivity.this, ModProductoActivity.class);
                         intent.putExtra("idUsuarioLog", idUser);
                         startActivity(intent);
                     }
@@ -149,7 +156,7 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
 
                         if (ok) {
                             Toast.makeText(EditarEliminarActivity.this, "Producto eliminado correctamente", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EditarEliminarActivity.this, PanelActivity.class);
+                            Intent intent = new Intent(EditarEliminarActivity.this, ModProductoActivity.class);
                             intent.putExtra("idUsuarioLog", idUser);
                             startActivity(intent);
                         }
@@ -171,7 +178,7 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         btnAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PanelActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ModProductoActivity.class);
                 intent.putExtra("idUsuarioLog", idUser);
                 startActivity(intent);
             }
@@ -188,7 +195,8 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
         etiPrecio.setText(String.valueOf(p.getPrecio()));
         ImageButton image = utiles.blobAImageButton(this, p.getImagen());
         imagenProd.setImageDrawable(image.getDrawable());
-        categoria = p.getCategoria();
+        imagenProd.setBackground(null);
+
     }
 
     private boolean faltanDatos() {
@@ -229,12 +237,6 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
-        if (categoria.equals("Camiseta")) {
-            parent.setSelection(0);
-        } else if (categoria.equals("Sudadera")) {
-            parent.setSelection(1);
-        }
 
     }
 }

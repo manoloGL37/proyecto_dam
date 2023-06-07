@@ -77,6 +77,7 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
                             Intent data = result.getData();
                             uri = data.getData();
                             imagenProd.setImageURI(uri);
+                            imagenProd.setBackground(null);
                             imagenIntroducida = true;
                         } else {
                             Toast.makeText(MasProductoActivity.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();

@@ -27,9 +27,9 @@ import java.util.ArrayList;
 public class DataBase {
 
     String bd = "stylepeak";
-    String url = "jdbc:mysql://192.168.0.193:3306/";
+    String url = "jdbc:mysql://192.168.0.193:3306/"; // Cambiar segun direccion de base de datos
     String user = "root";
-    String password = "";
+    String password = "proyectoDAM";
     Connection conn;
     String driver = "com.mysql.jdbc.Driver";
 
