@@ -1,6 +1,8 @@
 package com.example.proyectodammanuelgongora.MiCuenta;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,9 +111,27 @@ public class AdaptadorPublicaciones extends RecyclerView.Adapter<AdaptadorPublic
             btnEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    conexion.eliminarUnaPublicacion(idUsuario, listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
-                    listaPublicaciones.remove(getAdapterPosition());
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Confirmar eliminación");
+                    builder.setMessage("¿Estás seguro de que deseas eliminar esta publicación?");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            conexion.eliminarUnaPublicacion(idUsuario, listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
+                            listaPublicaciones.remove(getAdapterPosition());
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 }
             });
         }
