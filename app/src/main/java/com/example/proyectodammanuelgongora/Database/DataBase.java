@@ -44,10 +44,8 @@ public class DataBase {
 
             Class.forName(driver);
             conn = DriverManager.getConnection(url + bd, user, password);
-            Log.e("Conexion", "Conexion establecida");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-            Log.e("Conexion", "Error al conectar");
         }
         return conn;
     }
