@@ -97,6 +97,10 @@ public class ProductoActivity extends AppCompatActivity {
         precioProd.setText(String.valueOf(p.getPrecio()) + "€");
         descripcionProd.setText(p.getDescripcion());
         ImageView imageView = utiles.blobAImageView(this, p.getImagen());
-        imagenProd.setImageDrawable(imageView.getDrawable());
+        if (imageView == null) {
+            imagenProd.setImageResource(R.drawable.sin_imagen);
+        } else {
+            imagenProd.setImageDrawable(imageView.getDrawable());
+        }
     }
 }

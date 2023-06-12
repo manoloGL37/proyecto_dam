@@ -117,7 +117,7 @@ public class AdaptadorPublicaciones extends RecyclerView.Adapter<AdaptadorPublic
                     builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            conexion.eliminarUnaPublicacion(idUsuario, listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
+                            conexion.eliminarUnaPublicacion(listaPublicaciones.get(getAdapterPosition()).getIdPropietario(), listaPublicaciones.get(getAdapterPosition()).getIdPublicacion());
                             listaPublicaciones.remove(getAdapterPosition());
                             notifyDataSetChanged();
                         }
@@ -139,7 +139,11 @@ public class AdaptadorPublicaciones extends RecyclerView.Adapter<AdaptadorPublic
         public void rellenarEtis(Publicacion publicacion) {
             nombreUsuario.setText(publicacion.getNombre_usuario());
             ImageView imageView = utiles.blobAImageView(context, publicacion.getImagen());
-            imagenPublicacion.setImageDrawable(imageView.getDrawable());
+            if (imageView == null) {
+                imagenPublicacion.setImageResource(R.drawable.sin_imagen);
+            } else {
+                imagenPublicacion.setImageDrawable(imageView.getDrawable());
+            }
             descripcion.setText(publicacion.getDescripcion());
             likes.setText(String.valueOf(publicacion.getLikes()));
 

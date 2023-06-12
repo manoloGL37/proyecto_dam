@@ -16,7 +16,10 @@ import com.example.proyectodammanuelgongora.Modelos.Usuario;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
@@ -353,7 +356,7 @@ public class DataBase {
     public void crearPublicacion(Publicacion publicacion) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String fechaSubida = LocalDateTime.now().format(formatter);
+            String fechaSubida = ZonedDateTime.now().format(formatter);
 
             String query = "INSERT INTO publicacion(imagen, descripcion, fecha_subida, likes, id_propietario) VALUES (?, ?, ?, ?, ?)";
 

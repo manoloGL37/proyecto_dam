@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Button pressed state -->
+    <!-- Boton pulsado -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#42A5F5" /> <!-- Background color when pressed -->
-            <corners android:radius="25dp" /> <!-- Button corner radius -->
+            <solid android:color="#42A5F5" />
+            <corners android:radius="25dp" />
         </shape>
     </item>
-    <!-- Button focused state -->
+    <!-- Boton mantenido -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#42A5F5" /> <!-- Background color when focused -->
-            <corners android:radius="25dp" /> <!-- Button corner radius -->
+            <solid android:color="#42A5F5" />
+            <corners android:radius="25dp" />
         </shape>
     </item>
     <!-- Boton sin pulsar -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#1976D2" /> <!-- Default background color -->
-            <corners android:radius="25dp" /> <!-- Button corner radius -->
+            <solid android:color="#1976D2" />
+            <corners android:radius="25dp" />
         </shape>
     </item>
 </selector>

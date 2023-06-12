@@ -107,7 +107,12 @@ public class AdaptadorSocial extends RecyclerView.Adapter<AdaptadorSocial.MiView
         public void rellenarEtis(Publicacion publicacion) {
             nombreUsuario.setText(publicacion.getNombre_usuario());
             ImageView imageView = utiles.blobAImageView(context, publicacion.getImagen());
-            imagenPublicacion.setImageDrawable(imageView.getDrawable());
+            if (imageView == null) {
+                imagenPublicacion.setImageResource(R.drawable.sin_imagen);
+            } else {
+                imagenPublicacion.setImageDrawable(imageView.getDrawable());
+            }
+
             descripcion.setText(publicacion.getDescripcion());
             likes.setText(String.valueOf(publicacion.getLikes()));
 
