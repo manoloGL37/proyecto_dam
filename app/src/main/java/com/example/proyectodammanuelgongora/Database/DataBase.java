@@ -3,6 +3,7 @@ package com.example.proyectodammanuelgongora.Database;
 import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -49,6 +50,7 @@ public class DataBase {
             conn = DriverManager.getConnection(url + bd, user, password);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            Toast.makeText(null, "No hay conexion con la base de datos", Toast.LENGTH_SHORT).show();
         }
         return conn;
     }
@@ -248,7 +250,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return productos;
     }
@@ -317,7 +319,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return productos;
     }
@@ -346,7 +348,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return producto;
     }
@@ -396,7 +398,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return publicaciones;
     }
@@ -425,7 +427,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return publicaciones;
     }
@@ -590,7 +592,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return carrito;
     }
@@ -634,7 +636,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
 
         return direccion;
@@ -740,7 +742,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return pedidos;
     }
@@ -764,7 +766,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return pedidos;
     }
@@ -786,7 +788,7 @@ public class DataBase {
                 Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            //JOptionPane.showMessageDialog(null, "No se encuntra conectado a la base de datos.");
+
         }
         return idPedido;
     }
