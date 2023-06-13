@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class DataBase {
 
     String bd = "stylepeak";
-    String url = "jdbc:mysql://192.168.0.193:3306/"; // Cambiar segun direccion de base de datos
+    String url = "jdbc:mysql://192.168.0.191:3306/"; // Cambiar segun direccion de base de datos
     String user = "root";
     String password = "proyectoDAM";
     Connection conn;
@@ -268,6 +268,29 @@ public class DataBase {
             queryUpdateProducto.setInt(5, prod.getStock());
             queryUpdateProducto.setDouble(6, prod.getPrecio());
             queryUpdateProducto.setInt(7, idProd);
+            queryUpdateProducto.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return false;
+    }
+
+    public boolean actualizarProductoSinImagen(int idProd, Producto prod) {
+        try {
+
+            String query = "UPDATE Producto SET nombre_prod = ?, categoria = ?, descripcion = ?, stock = ?, precio = ? WHERE id = ?";
+
+            PreparedStatement queryUpdateProducto = conn.prepareStatement(query);
+            queryUpdateProducto.setString(1, prod.getNombreProd());
+            queryUpdateProducto.setString(2, prod.getCategoria());
+            queryUpdateProducto.setString(3, prod.getDescripcion());
+            queryUpdateProducto.setInt(4, prod.getStock());
+            queryUpdateProducto.setDouble(5, prod.getPrecio());
+            queryUpdateProducto.setInt(6, idProd);
             queryUpdateProducto.executeUpdate();
 
             return true;

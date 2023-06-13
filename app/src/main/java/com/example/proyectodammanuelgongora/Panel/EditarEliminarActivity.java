@@ -45,6 +45,7 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
     private ActivityResultLauncher<Intent> galeriaLauncher;
     private Uri uri = null;
     Boolean imagenIntroducida = false;
+    Boolean imagenCambiada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
                             uri = data.getData();
                             imagenProd.setImageURI(uri);
                             imagenIntroducida = true;
+                            imagenCambiada = true;
                         } else {
                             Toast.makeText(EditarEliminarActivity.this, "Cancelado por el usuario", Toast.LENGTH_SHORT).show();
                             imagenIntroducida = false;
@@ -129,7 +131,15 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
                     double precio = Double.parseDouble(etiPrecio.getText().toString());
                     byte[] imagen = utiles.imageButtonABlob(imagenProd);
 
-                    boolean ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                    boolean ok = false;
+
+                    if (imagenCambiada) {
+                        ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+
+                    } else if (!imagenCambiada) {
+                        ok = conexion.actualizarProductoSinImagen(idProd,new Producto(nombre, categoria, descipcion, stock, precio));
+                    }
+
 
                     if (ok) {
                         Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
@@ -215,10 +225,15 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
             return true;
         }
 
+        if(imagenProd != null) {
+            imagenIntroducida = true;
+        }
+
         if(!imagenIntroducida) {
             Toast.makeText(this, "Debe introducir una imagen", Toast.LENGTH_SHORT).show();
             return true;
         }
+
 
         return false;
     }
