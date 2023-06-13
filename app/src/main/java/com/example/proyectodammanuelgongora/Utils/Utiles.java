@@ -27,6 +27,15 @@ import java.io.ByteArrayOutputStream;
 
 public class Utiles {
 
+    private static Context context;
+
+    public Utiles() {
+    }
+
+    public Utiles(Context context) {
+        this.context = context;
+    }
+
     private Uri uri = null;
 
     String[] required_permissions = new String[]{
@@ -93,5 +102,18 @@ public class Utiles {
         return null;
     }
 
+    public static double parseToDouble(String precio) {
+        String cambiarTexto = precio.replace(",", ".");
+
+        try {
+            return Double.parseDouble(cambiarTexto);
+        } catch (NumberFormatException e) {
+            if (context != null) {
+                Toast.makeText(context, "El texto no es un número válido: " + precio, Toast.LENGTH_SHORT).show();
+            }
+
+            throw new IllegalArgumentException("El texto no es un número válido: " + precio);
+        }
+    }
 
 }

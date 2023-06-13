@@ -1,5 +1,7 @@
 package com.example.proyectodammanuelgongora.Panel;
 
+import static com.example.proyectodammanuelgongora.Utils.Utiles.parseToDouble;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -104,17 +106,25 @@ public class MasProductoActivity extends AppCompatActivity implements AdapterVie
                     String nombre = etiNombre.getText().toString();
                     String descipcion = etiDescripcion.getText().toString();
                     int stock = Integer.parseInt(etiStock.getText().toString());
-                    double precio = Double.parseDouble(etiPrecio.getText().toString());
+
                     byte[] imagen = utils.imageButtonABlob(imagenProd);
 
-                    boolean ok = conexion.crearProducto(new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                    try {
+                        double precio = Utiles.parseToDouble(etiPrecio.getText().toString());
 
-                    if (ok) {
-                        Toast.makeText(MasProductoActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MasProductoActivity.this, PanelActivity.class);
-                        intent.putExtra("idUsuarioLog", idUser);
-                        startActivity(intent);
+                        boolean ok = conexion.crearProducto(new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+
+                        if (ok) {
+                            Toast.makeText(MasProductoActivity.this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MasProductoActivity.this, PanelActivity.class);
+                            intent.putExtra("idUsuarioLog", idUser);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(MasProductoActivity.this, "Tiene algun error, revise los campos", Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
 
             }

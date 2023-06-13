@@ -128,25 +128,33 @@ public class EditarEliminarActivity extends AppCompatActivity implements Adapter
                     String nombre = etiNombre.getText().toString();
                     String descipcion = etiDescripcion.getText().toString();
                     int stock = Integer.parseInt(etiStock.getText().toString());
-                    double precio = Double.parseDouble(etiPrecio.getText().toString());
+
                     byte[] imagen = utiles.imageButtonABlob(imagenProd);
 
-                    boolean ok = false;
+                    try {
+                        double precio = Utiles.parseToDouble(etiPrecio.getText().toString());
 
-                    if (imagenCambiada) {
-                        ok = conexion.actualizarProducto(idProd,new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+                        boolean ok = false;
 
-                    } else if (!imagenCambiada) {
-                        ok = conexion.actualizarProductoSinImagen(idProd,new Producto(nombre, categoria, descipcion, stock, precio));
+                        if (imagenCambiada) {
+                            ok = conexion.actualizarProducto(idProd, new Producto(nombre, categoria, imagen, descipcion, stock, precio));
+
+                        } else if (!imagenCambiada) {
+                            ok = conexion.actualizarProductoSinImagen(idProd, new Producto(nombre, categoria, descipcion, stock, precio));
+                        }
+
+
+                        if (ok) {
+                            Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EditarEliminarActivity.this, ModProductoActivity.class);
+                            intent.putExtra("idUsuarioLog", idUser);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(EditarEliminarActivity.this, "Tiene algún error, revise los campos", Toast.LENGTH_SHORT).show();
                     }
 
 
-                    if (ok) {
-                        Toast.makeText(EditarEliminarActivity.this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(EditarEliminarActivity.this, ModProductoActivity.class);
-                        intent.putExtra("idUsuarioLog", idUser);
-                        startActivity(intent);
-                    }
                 }
 
             }
