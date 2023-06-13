@@ -35,12 +35,11 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btn_edit_prod"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -52,7 +51,8 @@
                 android:background="@drawable/img_subir"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/eti_nombre_edit_prod"
@@ -66,7 +66,7 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_prod_mas" />
+                app:layout_constraintTop_toBottomOf="@+id/img_prod_edit" />
 
             <EditText
                 android:id="@+id/eti_desc_edit_prod"
@@ -80,7 +80,7 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eti_nombre_mas_prod" />
+                app:layout_constraintTop_toBottomOf="@+id/eti_nombre_edit_prod" />
 
             <Spinner
                 android:id="@+id/eti_cat_edit_prod"
@@ -94,7 +94,7 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eti_desc_mas_prod" />
+                app:layout_constraintTop_toBottomOf="@+id/eti_desc_edit_prod" />
 
             <EditText
                 android:id="@+id/eti_stock_edit_prod"
@@ -108,7 +108,7 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eti_cat_mas_prod" />
+                app:layout_constraintTop_toBottomOf="@+id/eti_cat_edit_prod" />
 
             <EditText
                 android:id="@+id/eti_precio_edit_prod"
@@ -122,38 +122,44 @@
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/eti_stock_mas_prod" />
-        </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/eti_stock_edit_prod" />
+
+            <Button
+                android:id="@+id/btn_edit_prod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="72dp"
+                android:background="@drawable/btn_design"
+                android:padding="15dp"
+                android:text="@string/btn_guardar_prod"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eti_precio_edit_prod" />
+
+            <Button
+                android:id="@+id/btn_eliminar_prod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="72dp"
+                android:background="@color/red"
+                android:padding="15dp"
+                android:text="Eliminar"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eti_precio_edit_prod" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_edit_prod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/btn_design"
-        android:padding="15dp"
 
-        app:layout_constraintHorizontal_bias="0.5"
-        android:text="@string/btn_guardar_prod"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-    <Button
-        android:id="@+id/btn_eliminar_prod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@color/red"
-        android:padding="15dp"
-        android:text="Eliminar"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_edit_prod"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
