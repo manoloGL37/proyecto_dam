@@ -6,8 +6,10 @@
     </h3>
 </div>
 
+---
+
 <div align="left">
-    <h3>👨‍💻 Tecnologias usadas</h3>
+    <h3>👨‍💻 Tecnologias utilizadas para el desarrollo</h3>
     <img src="https://github.com/devicons/devicon/blob/master/icons/java/java-plain.svg" title="Java" alt="Java" width="40" height="40">
     <img src="https://github.com/devicons/devicon/blob/master/icons/mysql/mysql-plain.svg" title="MySQL" alt="MySQL" width="40" height="40">
     <img src="https://github.com/devicons/devicon/blob/master/icons/androidstudio/androidstudio-plain.svg" title="Android Studio" alt="Android Studio" width="40" height="40">
